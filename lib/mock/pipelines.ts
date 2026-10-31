@@ -46,11 +46,11 @@ export const avgDurationMinutes = durationTrend[11].p50
 export type StageName = "build" | "test" | "lint" | "security" | "deploy"
 
 export const stageFailures: { stage: StageName; label: string; failures: number }[] = [
-  { stage: "test", label: "test", failures: 212 },
-  { stage: "build", label: "build", failures: 97 },
-  { stage: "lint", label: "lint", failures: 64 },
-  { stage: "security", label: "security", failures: 31 },
-  { stage: "deploy", label: "deploy", failures: 14 },
+  { stage: "test", label: "테스트", failures: 212 },
+  { stage: "build", label: "빌드", failures: 97 },
+  { stage: "lint", label: "코드 검사", failures: 64 },
+  { stage: "security", label: "보안 검사", failures: 31 },
+  { stage: "deploy", label: "배포", failures: 14 },
 ]
 
 export const projectPipelineStats = [...activeProjects]

@@ -109,12 +109,12 @@ const PAGE_SIZE = 12
 function RoleChip({ role }: { role: UserRole | "Admin" | null }) {
   if (!role) return <span className="text-xs text-muted-foreground">없음</span>
   if (role === "Admin")
-    return <span className="rounded bg-amber-500/14 px-1.5 py-px text-[11px] font-bold text-amber-800 dark:text-amber-300">관리자</span>
-  return <span className={cn("rounded px-1.5 py-px text-[11px] font-bold", ROLE_CHIP[role])}>{role}</span>
+    return <span className="rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
+  return <span className={cn("rounded px-1.5 py-px text-[0.7778rem] font-bold", ROLE_CHIP[role])}>{role}</span>
 }
 
 function GroupChip({ group }: { group: AccessGroup }) {
-  return <span className="rounded bg-muted px-1.5 py-px font-mono text-[11px] font-semibold">{group}</span>
+  return <span className="rounded bg-muted px-1.5 py-px font-mono text-[0.7778rem] font-semibold">{group}</span>
 }
 
 function requestSummary(r: AccessRequest) {
@@ -503,7 +503,7 @@ export function AccessView() {
                             {r.user.status === "pending" && <StatusPill status="warning" label="초대 대기 계정" size="xs" />}
                           </div>
                           <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-sm">
-                            <span className="rounded bg-tone-orange/12 px-1.5 py-px text-[11px] font-bold text-tone-orange">
+                            <span className="rounded bg-tone-orange/12 px-1.5 py-px text-[0.7778rem] font-bold text-tone-orange">
                               {REQUEST_KIND_LABELS[r.kind]}
                             </span>
                             {r.group ? <GroupChip group={r.group} /> : <span className="text-xs text-muted-foreground">인스턴스 전체</span>}
@@ -697,7 +697,7 @@ export function AccessView() {
                     {ACCESS_GROUPS.map((g) => (
                       <TableHead key={g} className="min-w-44">
                         <div className="font-mono text-xs font-bold text-foreground">{g}</div>
-                        <div className="text-[11px] font-normal text-muted-foreground">{groupMemberCount(g)}명</div>
+                        <div className="text-[0.7778rem] font-normal text-muted-foreground">{groupMemberCount(g)}명</div>
                       </TableHead>
                     ))}
                     <TableHead className="text-center">관리자</TableHead>
@@ -737,7 +737,7 @@ export function AccessView() {
                                 {days !== null && (
                                   <span
                                     title={`임시 권한 · ${fmtDate(base!.expiresAt!)} 만료`}
-                                    className={cn("inline-flex items-center gap-0.5 text-[11px] tabular-nums", days <= 7 ? "font-bold text-amber-700 dark:text-amber-300" : "text-muted-foreground")}
+                                    className={cn("inline-flex items-center gap-0.5 text-[0.7778rem] tabular-nums", days <= 7 ? "font-bold text-amber-700 dark:text-amber-300" : "text-muted-foreground")}
                                   >
                                     <ClockIcon className="size-3" />
                                     {days}일
@@ -749,7 +749,7 @@ export function AccessView() {
                         })}
                         <TableCell className="text-center">
                           {admins.includes(u.id) ? (
-                            <span className="rounded bg-amber-500/14 px-1.5 py-px text-[11px] font-bold text-amber-800 dark:text-amber-300">관리자</span>
+                            <span className="rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
                           ) : (
                             <MinusIcon className="mx-auto size-3.5 text-muted-foreground/50" />
                           )}

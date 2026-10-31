@@ -47,7 +47,7 @@ export function ActivityFeed({ items, className }: { items: ActivityItem[]; clas
               <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground">
                 {item.actor && (
                   <span className="inline-flex items-center gap-1">
-                    <UserAvatar name={item.actor.name} hue={item.actor.hue} size="xs" className="size-4 text-[9px]" />
+                    <UserAvatar name={item.actor.name} hue={item.actor.hue} size="xs" className="size-4 text-[0.6667rem]" />
                     {item.actor.name}
                   </span>
                 )}

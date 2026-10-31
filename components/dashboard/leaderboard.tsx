@@ -55,7 +55,7 @@ export function Leaderboard({
                 <span className="truncate text-sm font-bold">{row.user.name}</span>
                 {rank === 1 && <CrownIcon className="size-3.5 text-amber-500" />}
                 {row.user.streakDays >= 14 && (
-                  <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-orange-600 dark:text-orange-300">
+                  <span className="inline-flex items-center gap-0.5 text-[0.7778rem] font-bold text-orange-600 dark:text-orange-300">
                     <FlameIcon className="size-3" />
                     {row.user.streakDays}일
                   </span>
@@ -68,7 +68,7 @@ export function Leaderboard({
             </div>
             <div className="flex flex-col items-end gap-0.5">
               <span className="text-sm font-extrabold tabular-nums">{fmtInt(row.commits)}</span>
-              {showPrevious && <TrendBadge trend={trend} className="px-1 py-0 text-[11px]" muted={row.previous === 0} />}
+              {showPrevious && <TrendBadge trend={trend} className="px-1 py-0 text-[0.7778rem]" muted={row.previous === 0} />}
             </div>
           </li>
         )

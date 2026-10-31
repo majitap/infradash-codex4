@@ -37,12 +37,12 @@ export type NavGroup = {
 
 export const navGroups: NavGroup[] = [
   {
-    label: "Gemini 인텔리전스",
+    label: "AI 분석 및 운영",
     items: [
-      { title: "AI Ops 센터", url: "/ai-ops", icon: SparklesIcon, description: "Gemini 기반 인프라 이상 탐지 및 자동 대응", tone: "violet", keywords: ["gemini", "ai", "ops", "anomaly", "이상탐지"] },
-      { title: "인프라 토폴로지", url: "/topology", icon: NetworkIcon, description: "GitLab 풀스택 아키텍처 실시간 맵", tone: "sky", keywords: ["topology", "architecture", "map", "인프라", "토폴로지"] },
-      { title: "DORA 지표", url: "/dora", icon: GaugeIcon, description: "엔지니어링 배포 속도와 안정성 지표", tone: "emerald", keywords: ["dora", "velocity", "배포빈도", "리드타임"] },
-      { title: "FinOps 비용 분석", url: "/finops", icon: CoinsIcon, description: "클라우드 러너 및 스토리지 비용 최적화", tone: "amber", keywords: ["finops", "cost", "비용", "spot", "스팟"] },
+      { title: "AI 운영 센터", url: "/ai-ops", icon: SparklesIcon, description: "Gemini 기반 인프라 이상 탐지 및 자동 대응", tone: "violet", keywords: ["gemini", "ai", "ops", "anomaly", "이상탐지"] },
+      { title: "인프라 구성도", url: "/topology", icon: NetworkIcon, description: "GitLab 풀스택 아키텍처 실시간 맵", tone: "sky", keywords: ["topology", "architecture", "map", "인프라", "토폴로지"] },
+      { title: "배포 성과 지표", url: "/dora", icon: GaugeIcon, description: "엔지니어링 배포 속도와 안정성 지표", tone: "emerald", keywords: ["dora", "velocity", "배포빈도", "리드타임"] },
+      { title: "클라우드 비용 분석", url: "/finops", icon: CoinsIcon, description: "클라우드 러너 및 스토리지 비용 최적화", tone: "amber", keywords: ["finops", "cost", "비용", "spot", "스팟"] },
     ],
   },
   {

@@ -242,7 +242,7 @@ export function RunnersView() {
                         <TableCell className="hidden xl:table-cell">
                           <div className="flex max-w-48 flex-wrap gap-1">
                             {r.tags.map((t) => (
-                              <span key={t} className="rounded bg-muted px-1.5 py-px font-mono text-[11px]">
+                              <span key={t} className="rounded bg-muted px-1.5 py-px font-mono text-[0.7778rem]">
                                 {t}
                               </span>
                             ))}

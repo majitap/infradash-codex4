@@ -1,5 +1,5 @@
 {
-  "name": "infradash-gemni",
+  "name": "infradash-codex3",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@fontsource-variable/geist-mono": "^5.3.0",
     "@tanstack/react-table": "^9.3.1",
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.1.1",
@@ -39,5 +40,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "GitLab Infrastructure & Observability Console (Gemini Edition)"
+  "description": "Gemini Edition 기반 한글화 및 가독성 개선판"
 }

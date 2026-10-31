@@ -219,13 +219,13 @@ export function ProjectsView() {
                                 <span className="font-semibold">{p.name}</span>
                               </span>
                               {p.archived && (
-                                <span className="inline-flex items-center gap-1 rounded bg-muted px-1.5 py-px text-[11px] font-bold text-muted-foreground">
+                                <span className="inline-flex items-center gap-1 rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold text-muted-foreground">
                                   <ArchiveIcon className="size-3" />
                                   아카이브
                                 </span>
                               )}
                               {p.visibility === "public" && (
-                                <span className="inline-flex items-center gap-0.5 text-[11px] text-amber-600 dark:text-amber-300">
+                                <span className="inline-flex items-center gap-0.5 text-[0.7778rem] text-amber-600 dark:text-amber-300">
                                   <StarIcon className="size-3 fill-current" />
                                   {p.stars}
                                 </span>

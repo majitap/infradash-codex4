@@ -1,17 +1,11 @@
 "use client"
 
 import * as React from "react"
-import {
-  AwardIcon,
-  CheckCircle2Icon,
-  ClockIcon,
-  GaugeIcon,
-  RocketIcon,
-  TrendingUpIcon,
-} from "lucide-react"
+import { AwardIcon } from "lucide-react"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { doraMetrics, doraServiceRankings } from "@/lib/mock-data"
+import { doraTierLabel } from "@/lib/localization"
 
 export function DoraView() {
   return (
@@ -20,16 +14,16 @@ export function DoraView() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
         <div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900">
-            DORA Velocity & Reliability
+            배포 속도와 안정성
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            DevOps Research and Assessment(DORA) 4대 핵심 지표를 기반으로 한 소프트웨어 전달 성능
+            DORA 4대 핵심 지표로 살펴보는 소프트웨어 배포 성과
           </p>
         </div>
 
         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 text-xs font-bold text-emerald-600">
           <AwardIcon className="size-4" />
-          Elite Tier Organization
+          DORA 최상위 등급
         </span>
       </div>
 
@@ -48,10 +42,10 @@ export function DoraView() {
               <span className={`text-xs font-semibold ${idx === 0 ? "text-white/90" : "text-slate-500"}`}>
                 {item.title.split(" (")[0]}
               </span>
-              <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${
+              <span className={`rounded-full px-2 py-0.5 text-[0.6667rem] font-bold ${
                 idx === 0 ? "bg-white/20 text-white" : "bg-emerald-50 text-emerald-600 border border-emerald-100"
               }`}>
-                {item.tier}
+                {doraTierLabel(item.tier)}
               </span>
             </div>
 
@@ -107,8 +101,8 @@ export function DoraView() {
                   <TableCell className="font-mono text-xs text-emerald-600 font-semibold">{svc.cfr}</TableCell>
                   <TableCell className="font-mono text-xs text-slate-700">{svc.mttr}</TableCell>
                   <TableCell className="text-right">
-                    <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-2.5 py-0.5 text-[10px] font-bold">
-                      {svc.tier}
+                    <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-2.5 py-0.5 text-[0.7222rem] font-bold">
+                      {doraTierLabel(svc.tier)}
                     </span>
                   </TableCell>
                 </TableRow>

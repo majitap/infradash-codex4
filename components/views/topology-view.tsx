@@ -1,24 +1,10 @@
 "use client"
 
 import * as React from "react"
-import {
-  ActivityIcon,
-  CheckCircle2Icon,
-  CpuIcon,
-  DatabaseIcon,
-  GlobeIcon,
-  HardDriveIcon,
-  LayersIcon,
-  NetworkIcon,
-  RefreshCwIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  SparklesIcon,
-  WorkflowIcon,
-} from "lucide-react"
+import { ActivityIcon, CheckCircle2Icon, CpuIcon, HardDriveIcon, RefreshCwIcon, SparklesIcon } from "lucide-react"
 import { toast } from "sonner"
 
-import { Badge } from "@/components/ui/badge"
+
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { topologyNodes, type TopologyNode } from "@/lib/mock-data"
@@ -33,11 +19,11 @@ export function TopologyView() {
 
   const categories = [
     { key: "all", label: "전체 아키텍처" },
-    { key: "edge", label: "엣지 & LB" },
+    { key: "edge", label: "엣지·부하 분산" },
     { key: "app", label: "애플리케이션" },
     { key: "storage", label: "Gitaly 스토리지" },
     { key: "database", label: "데이터베이스 & 캐시" },
-    { key: "runner", label: "러너 플릿" },
+    { key: "runner", label: "러너 구성" },
     { key: "object", label: "오브젝트 스토리지" },
   ]
 
@@ -47,7 +33,7 @@ export function TopologyView() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
         <div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900">
-            Infrastructure Topology
+            인프라 구성도
           </h1>
           <p className="text-xs text-slate-400 mt-1">
             Cloudflare 엣지부터 Rails Puma, Praefect, PostgreSQL, EKS 러너 플릿까지의 실시간 아키텍처
@@ -106,11 +92,11 @@ export function TopologyView() {
                       <span className={`size-2.5 rounded-full ${
                         node.status === "healthy" ? "bg-emerald-400" : "bg-amber-400"
                       }`} />
-                      <span className="text-[11px] font-bold text-slate-400">
+                      <span className="text-[0.7778rem] font-bold text-slate-400">
                         {node.categoryLabel}
                       </span>
                     </div>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-mono text-slate-500 font-semibold">
+                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[0.6667rem] font-mono text-slate-500 font-semibold">
                       {node.zone}
                     </span>
                   </div>
@@ -126,29 +112,29 @@ export function TopologyView() {
 
                   <div className="flex items-center justify-between border-t border-slate-100 pt-2.5 text-xs text-slate-500">
                     {node.metrics.cpu !== undefined ? (
-                      <span className="flex items-center gap-1 text-[11px]">
+                      <span className="flex items-center gap-1 text-[0.7778rem]">
                         <CpuIcon className="size-3 text-slate-400" />
                         CPU {node.metrics.cpu}%
                       </span>
                     ) : node.metrics.storage ? (
-                      <span className="flex items-center gap-1 text-[11px]">
+                      <span className="flex items-center gap-1 text-[0.7778rem]">
                         <HardDriveIcon className="size-3 text-slate-400" />
                         {node.metrics.storage}
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-[11px]">
+                      <span className="flex items-center gap-1 text-[0.7778rem]">
                         <ActivityIcon className="size-3 text-slate-400" />
                         {node.metrics.qps ?? "정상"}
                       </span>
                     )}
 
                     {node.metrics.latency && (
-                      <span className="font-mono text-slate-800 font-bold text-[11px]">
+                      <span className="font-mono text-slate-800 font-bold text-[0.7778rem]">
                         {node.metrics.latency}
                       </span>
                     )}
                     {node.metrics.instances && (
-                      <span className="font-mono text-slate-800 font-bold text-[11px]">
+                      <span className="font-mono text-slate-800 font-bold text-[0.7778rem]">
                         {node.metrics.instances}
                       </span>
                     )}
@@ -168,7 +154,7 @@ export function TopologyView() {
               </span>
               <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
                 <CheckCircle2Icon className="size-3.5" />
-                {selectedNode.status === "healthy" ? "Healthy" : "Warning"}
+                {selectedNode.status === "healthy" ? "정상" : "주의"}
               </span>
             </div>
 
@@ -177,7 +163,7 @@ export function TopologyView() {
                 {selectedNode.name}
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Zone: {selectedNode.zone}
+                위치: {selectedNode.zone}
               </p>
             </div>
 
@@ -228,7 +214,7 @@ export function TopologyView() {
                 <SparklesIcon className="size-3.5" />
                 <span>Gemini 진단</span>
               </div>
-              <p className="mt-1 text-[11px] text-slate-600 leading-relaxed">
+              <p className="mt-1 text-[0.7778rem] text-slate-600 leading-relaxed">
                 {selectedNode.status === "healthy"
                   ? "최근 24시간 동안 안정적인 상태입니다. 리소스 임계치 초과 징후가 없습니다."
                   : "I/O 큐 대기 시간 증가 및 메모리 점유율 상승 추세가 감지되었습니다. 자동 완화 조치를 실행할 수 있습니다."}

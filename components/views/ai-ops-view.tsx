@@ -1,33 +1,14 @@
 "use client"
 
 import * as React from "react"
-import {
-  AlertTriangleIcon,
-  BotIcon,
-  CheckCircle2Icon,
-  CpuIcon,
-  ExternalLinkIcon,
-  PlayIcon,
-  RefreshCwIcon,
-  SendIcon,
-  ShieldAlertIcon,
-  SparklesIcon,
-  TerminalIcon,
-  TrendingDownIcon,
-  Wand2Icon,
-  ZapIcon,
-} from "lucide-react"
+import { CheckCircle2Icon, RefreshCwIcon, SendIcon, SparklesIcon, Wand2Icon } from "lucide-react"
 import { toast } from "sonner"
 
-import { Badge } from "@/components/ui/badge"
+
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+
 import { Input } from "@/components/ui/input"
-import {
-  geminiAnomalies,
-  geminiOptimizations,
-  type GeminiAnomaly,
-} from "@/lib/mock-data"
+import { geminiAnomalies, type GeminiAnomaly } from "@/lib/mock-data"
 
 const SAMPLE_PROMPTS = [
   "러너 오토스케일링 스팟 중단 리스크 진단해줘",
@@ -154,9 +135,9 @@ export function AiOpsView() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-black text-slate-900">Gemini AI Ops Center</h2>
-              <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-600">
-                Active Monitoring
+              <h2 className="text-xl font-black text-slate-900">Gemini AI 운영 센터</h2>
+              <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[0.7222rem] font-bold text-emerald-600">
+                모니터링 중
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -181,13 +162,13 @@ export function AiOpsView() {
       <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Ask Gemini Infra (대화형 원인 진단)</h3>
+            <h3 className="text-sm font-bold text-slate-900">Gemini에게 원인 물어보기</h3>
             <p className="text-xs text-slate-400 mt-0.5">
               자연어로 러너 상태, 파이프라인 오류, 스토리지 병목 원인을 질문하세요.
             </p>
           </div>
           <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-3 py-1 text-xs font-semibold">
-            Gemini 2.5 Engine
+            Gemini 2.5 진단 데모
           </span>
         </div>
 
@@ -233,7 +214,7 @@ export function AiOpsView() {
                       ))}
                     </ul>
                     {msg.details.code && (
-                      <div className="mt-2 rounded-xl bg-slate-900 p-3 font-mono text-[11px] text-slate-100 overflow-x-auto">
+                      <div className="mt-2 rounded-xl bg-slate-900 p-3 font-mono text-[0.7778rem] text-slate-100 overflow-x-auto">
                         <pre>{msg.details.code}</pre>
                       </div>
                     )}
@@ -278,7 +259,7 @@ export function AiOpsView() {
       {/* 3. Active Anomalies Grid */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">감지된 이상 징후 (Active Anomalies)</h3>
+          <h3 className="text-sm font-bold text-slate-900">감지된 이상 징후</h3>
           <span className="text-xs text-slate-400">
             {anomalies.filter((a) => !a.resolved).length}건 조치 대기
           </span>
@@ -296,16 +277,16 @@ export function AiOpsView() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
+                  <span className={`rounded-full px-2.5 py-0.5 text-[0.7222rem] font-bold ${
                     item.resolved
                       ? "bg-slate-100 text-slate-500"
                       : item.severity === "critical"
                       ? "bg-rose-50 text-rose-600 border border-rose-100"
                       : "bg-amber-50 text-amber-600 border border-amber-100"
                   }`}>
-                    {item.resolved ? "완화됨" : item.severity.toUpperCase()}
+                    {item.resolved ? "완화됨" : { critical: "심각", warning: "주의", info: "안내" }[item.severity]}
                   </span>
-                  <span className="text-[11px] font-semibold text-[#5551ff]">
+                  <span className="text-[0.7778rem] font-semibold text-[#5551ff]">
                     신뢰도 {item.confidence}%
                   </span>
                 </div>
@@ -324,7 +305,7 @@ export function AiOpsView() {
               </div>
 
               <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-                <span className="text-[10px] text-slate-400">
+                <span className="text-[0.7222rem] text-slate-400">
                   {item.timestamp}
                 </span>
 

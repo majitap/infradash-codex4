@@ -1,24 +1,11 @@
 "use client"
 
 import * as React from "react"
-import {
-  ArrowDownRightIcon,
-  CheckCircle2Icon,
-  CoinsIcon,
-  DollarSignIcon,
-  HardDriveIcon,
-  PiggyBankIcon,
-  ServerIcon,
-  SparklesIcon,
-  Trash2Icon,
-  TrendingDownIcon,
-  Wand2Icon,
-  ZapIcon,
-} from "lucide-react"
+import { CheckCircle2Icon, PiggyBankIcon } from "lucide-react"
 import { toast } from "sonner"
 
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
+
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { finOpsCostBreakdown, finOpsData, finOpsSavingsRecommendations } from "@/lib/mock-data"
 
@@ -45,7 +32,7 @@ export function FinOpsView() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
         <div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900">
-            FinOps & Cloud Cost
+            클라우드 비용 분석
           </h1>
           <p className="text-xs text-slate-400 mt-1">
             GitLab EKS 컴퓨팅, Gitaly 볼륨, 아티팩트 스토리지 및 네트워크 전송 비용 분석
@@ -68,7 +55,7 @@ export function FinOpsView() {
                 ${finOpsData.monthlyTotal.toLocaleString()}
               </span>
               <span className="ml-auto text-xs font-bold text-emerald-300">
-                {finOpsData.monthlyDelta}% MoM
+                {finOpsData.monthlyDelta}% 전월 대비
               </span>
             </div>
             <p className="mt-1 text-xs text-white/80">전월 대비 $5,420 절감</p>
@@ -147,11 +134,11 @@ export function FinOpsView() {
                         <div className="w-16 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                           <div style={{ width: `${row.percentage}%` }} className="h-full bg-[#5551ff] rounded-full" />
                         </div>
-                        <span className="text-slate-400 text-[11px] font-semibold">{row.percentage}%</span>
+                        <span className="text-slate-400 text-[0.7778rem] font-semibold">{row.percentage}%</span>
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600">
+                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[0.7222rem] font-bold text-slate-600">
                         {row.status}
                       </span>
                     </TableCell>
@@ -182,18 +169,18 @@ export function FinOpsView() {
                 <div key={rec.id} className="flex flex-col gap-2 rounded-2xl border border-slate-100 bg-[#fbfcfd] p-3.5 text-xs">
                   <div className="flex items-start justify-between gap-1">
                     <span className="font-bold text-slate-800 leading-tight">{rec.title}</span>
-                    <span className="rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-0.5 text-[10px] font-bold shrink-0">
+                    <span className="rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-0.5 text-[0.7222rem] font-bold shrink-0">
                       {rec.impact}
                     </span>
                   </div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-400 text-[0.7778rem] leading-relaxed">
                     {rec.description}
                   </p>
                   <div className="flex items-center justify-between border-t border-slate-100 pt-2.5 mt-1">
-                    <span className="text-[10px] text-slate-400">난이도: {rec.effort}</span>
+                    <span className="text-[0.7222rem] text-slate-400">난이도: {rec.effort}</span>
                     <button
                       onClick={() => handleApplyRec(rec.id, rec.title)}
-                      className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white px-3 py-1 text-[11px] font-bold shadow-xs transition-colors"
+                      className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white px-3 py-1 text-[0.7778rem] font-bold shadow-xs transition-colors"
                     >
                       적용하기
                     </button>

@@ -177,7 +177,7 @@ export function SecurityView() {
                           <div className="flex items-center gap-2">
                             <span className="truncate font-medium">{v.title}</span>
                             {v.fixAvailable && (
-                              <span className="inline-flex shrink-0 items-center gap-0.5 rounded bg-emerald-500/12 px-1.5 py-px text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
+                              <span className="inline-flex shrink-0 items-center gap-0.5 rounded bg-emerald-500/12 px-1.5 py-px text-[0.7778rem] font-bold text-emerald-700 dark:text-emerald-300">
                                 <WrenchIcon className="size-3" />
                                 패치
                               </span>
@@ -193,7 +193,7 @@ export function SecurityView() {
                           <StatusPill status={SEVERITY_STATUS[v.severity]} label={SEVERITY_LABELS[v.severity]} size="xs" />
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          <span className="rounded bg-muted px-1.5 py-px text-[11px] font-bold">{v.scanner}</span>
+                          <span className="rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold">{v.scanner}</span>
                         </TableCell>
                         <TableCell className="hidden lg:table-cell">
                           <ProjectRef name={v.project} showGroup={false} />

@@ -1,63 +1,49 @@
-# InfraDash (Gemini Edition)
+# InfraDash 한글판
 
-✨ **GitLab 인프라 관측성 & AI 운영 콘솔 (Gemini Edition)**
+**배포 주소: https://majitap.github.io/infradash-codex3/**
 
-Next.js(App Router), Tailwind CSS v4, shadcn/ui, Recharts를 기반으로 구현된 차세대 GitLab 엔터프라이즈 인프라 모니터링 & AI Ops 대시보드입니다.
+[InfraDash Gemini Edition](https://majitap.github.io/infradash-gemni/)의 소스와 디자인을 바탕으로, 화면 한글화와 가독성을 개선한 별도 배포판입니다. 보라색 강조 카드, 캡슐형 막대 차트, 반원 게이지, 시간 추적 카드의 구성을 유지합니다.
 
-- **Live URL**: [https://majitap.github.io/infradash-gemni/](https://majitap.github.io/infradash-gemni/)
-- **기준 저장소**: `infradash` (Codex 버전)을 기반으로 확장 및 고도화
+원본 소스: [majitap/infradash-gemni](https://github.com/majitap/infradash-gemni). 원본 설명은 [README.gemini.md](README.gemini.md)에 보존했습니다. 원본의 Git 기록과 작성자 정보도 유지합니다.
 
----
+## 변경 내용
 
-## 🌟 Gemini Edition 신규 & 특화 기능
+- 대시보드, 사이드바, 검색, 버튼, 상태, 날짜, 접근성 레이블 한글화.
+- 인프라 구성도, AI 운영 센터, 배포 성과 지표, 클라우드 비용 화면의 영문 제목·분류·등급 한글화.
+- 반복되던 카드 제목을 `주간 빌드 추이`, `예정된 작업`, `팀 작업 현황`, `프로젝트 진행률`로 구체화.
+- 원본의 나눔스퀘어 네오와 색상·라운드·카드 구성을 유지.
+- 브라우저 기본값 16px 기준 본문 기반 크기 18px. 작은 설명은 약 13–15px, 일반 메뉴·라벨은 약 15–18px.
+- 흐린 회색 설명의 대비를 개선하고, 한글 줄바꿈과 작은 화면의 검색창을 조정.
+- 차트 축 글자 크기와 키보드 초점 표시 개선. 모션 감소 설정 지원.
+- 코딩 폰트 Geist Mono는 패키지에 포함하여 빌드 시 Google Fonts 요청을 제거. 라이선스는 `public/licenses/Geist-Mono.txt`.
+- 별도 경로 `/infradash-codex3/` 및 독립적인 테마 저장 키 사용.
 
-| 메뉴 | 경로 | 설명 |
-| --- | --- | --- |
-| **AI Ops 센터** | `/ai-ops` | **Gemini 2.5 기반 실시간 이상 탐지**: AWS EKS 스팟 러너 사전 중단 예측, Gitaly Shard-02 I/O 병목 분석, 자연어 장애 원인 진단(Ask Gemini Infra), 1-클릭 자율 완화 실행 |
-| **인프라 토폴로지** | `/topology` | **GitLab 풀스택 아키텍처 실시간 맵**: Cloudflare WAF → HAProxy LB → Rails Puma Pods → Praefect Gitaly 샤드 → PostgreSQL Patroni HA → Redis Sentinel → EKS / GPU 러너 플릿 트래픽 플로우 및 실시간 노드 텔레메트리 인스펙터 |
-| **DORA 지표** | `/dora` | **구글 DORA 4대 핵심 지표 (Elite 등급)**: 배포 빈도(DF: 18.4회/일), 변경 리드 타임(LT: 42분), 변경 실패율(CFR: 1.8%), 서비스 복구 시간(MTTR: 14분) 및 마이크로서비스별 DORA 랭킹 |
-| **FinOps 비용 분석** | `/finops` | **클라우드 러너 & 스토리지 비용 최적화**: 월간 지출($38,420), 스팟 인스턴스 절감액($14,280, 68.4% 채택), 유휴 자원 낭비 감지($2,840), 아티팩트 만료 및 고아 볼륨 회수 추천 |
+GitLab, Gemini, AWS, Gitaly 등의 제품명과 API·CPU·CI/CD·DORA 등의 기술 약어, 저장소·브랜치·코드 식별자는 그대로 유지합니다.
 
----
+## 데이터와 동작
 
-## 📊 기존 주요 페이지
+모든 수치는 원본의 모의 데이터입니다. 실제 GitLab, 클라우드, Gemini API와 연결하지 않습니다. AI 대화는 미리 작성된 예시 응답이며, 조치·정리·추가 버튼은 데모 상태와 알림만 변경합니다.
 
-| 메뉴 | 경로 | 내용 |
-| --- | --- | --- |
-| **개요** | `/` | Gemini AI 이상 예측 배너, S1 인시던트 배너, 핵심 KPI 타일, 파이프라인 성공률 추이, 커밋 랭킹, 주간 활동 피드 |
-| **파이프라인** | `/pipelines` | CI/CD 성공률, 소요 시간, 실패 단계, 프로젝트별 분석, 최근 파이프라인 |
-| **러너** | `/runners` | 러너 상태 및 실행기별 분석, 부하율 추이, 러너 재시작/일시정지 시뮬레이션 |
-| **인시던트** | `/incidents` | 온콜 현황, 월별 MTTR, 심각도 분포, 서비스 가용성 지표 |
-| **커밋** | `/commits` | 주간/월간 커밋 랭킹 포디움, 연속 커밋 스트릭, 시간대별 히트맵 |
-| **머지 리퀘스트** | `/merge-requests` | 처리량, 머지 소요 시간, 리뷰어 부하, 오래된 MR |
-| **프로젝트** | `/projects` | 언어 분포, 그룹별 프로젝트 통계, 프로젝트 활동도 |
-| **사용자** | `/users` | 역할 분포, 부서별 인원, 입사/퇴사 추이, 2FA 현황 |
-| **권한 관리** | `/access` | 접근 요청 승인/반려, 그룹 권한 일괄 편집, 관리자 계정 정책 |
-| **스토리지** | `/storage` | 리포지토리/아티팩트/레지스트리 용량 및 정리 후보 |
-| **보안** | `/security` | 취약점 추이, 보안 스캐너 현황, 컴플라이언스 체크 |
-| **감사 로그** | `/audit` | 이벤트 유형별 감사 기록 및 필터링 검색 |
-| **업그레이드** | `/upgrade` | GitLab 버전 업그레이드 경로와 단계별 체크리스트 |
+원본의 모든 경로를 유지합니다: 대시보드, 파이프라인, 러너, 인프라 구성도, 배포 성과 지표, AI 운영 센터, 클라우드 비용, 스토리지, 보안, 업그레이드와 검색에서 접근하는 개발·사용자·권한·감사 화면.
 
----
+## 개발
 
-## 🛠️ 기술 스택
-
-- **Framework**: Next.js 16.4.3 (App Router, Static Export `output: "export"`)
-- **Styling**: Tailwind CSS v4, CSS Variables, `tw-animate-css`
-- **UI Components**: shadcn/ui (`dashboard-01` 기반), Lucide Icons
-- **Data Visualization**: Recharts, Custom Animated SVG Topology
-- **Toast**: Sonner
-- **Theme**: Light / Dark Mode (`next-themes`)
-- **Deployment**: GitHub Actions → GitHub Pages (Base path: `/infradash-gemni`)
-
----
-
-## 🚀 로컬 실행 & 빌드
-
-```bash
-# 개발 서버 실행
+```sh
+npm ci
 npm run dev
-
-# 프로덕션 정적 빌드 검증
+# http://localhost:3000/infradash-codex3/
+npm run lint
+npx tsc --noEmit
 npm run build
 ```
+
+Next.js 16.4.3, Tailwind CSS v4, shadcn/ui, Recharts를 사용합니다. `output: "export"`, `basePath: "/infradash-codex3"`, `trailingSlash: true`로 `out/`에 정적 사이트를 생성합니다.
+
+`main`에 푸시하면 GitHub Actions에서 검증·빌드 후 GitHub Pages에 배포합니다.
+
+## 가독성 참고
+
+- [Atlassian Typography](https://atlassian.design/foundations/typography): 글자 크기, 행간, 정보 위계.
+- [Material 3 Applying type](https://m3.material.io/styles/typography/applying-type): 제목·본문·라벨의 역할 구분.
+
+화면 구성은 Gemini Edition을 기준으로 유지하고, 이 지침은 글자와 설명의 가독성을 조정하는 데 참고했습니다.

@@ -10,7 +10,7 @@ type UserAvatarProps = {
 }
 
 const SIZES = {
-  xs: "size-6 text-[11px]",
+  xs: "size-6 text-[0.7778rem]",
   sm: "size-7 text-xs",
   md: "size-9 text-sm",
   lg: "size-12 text-base",

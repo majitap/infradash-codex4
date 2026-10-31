@@ -22,7 +22,7 @@ export function StatusPill({
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-1 rounded-full font-bold whitespace-nowrap",
-        size === "xs" ? "px-1.5 py-px text-[11px]" : "px-2 py-0.5 text-xs",
+        size === "xs" ? "px-1.5 py-px text-[0.7778rem]" : "px-2 py-0.5 text-xs",
         s.soft,
         s.text,
         className

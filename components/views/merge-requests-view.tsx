@@ -102,7 +102,7 @@ function MRRow({ mr }: { mr: MergeRequest }) {
           <span className="font-mono">!{mr.iid}</span>
           <ProjectRef name={mr.project} showGroup={false} />
           {mr.labels.map((l) => (
-            <span key={l} className={`rounded px-1.5 py-px text-[11px] font-bold ${LABEL_CLASS[l]}`}>
+            <span key={l} className={`rounded px-1.5 py-px text-[0.7778rem] font-bold ${LABEL_CLASS[l]}`}>
               {l}
             </span>
           ))}
@@ -310,7 +310,7 @@ export function MergeRequestsView() {
             <CardContent className="flex flex-col gap-2">
               {staleMRs.slice(0, 5).map((mr) => (
                 <div key={mr.iid} className="flex items-center gap-2 text-sm">
-                  <span className="shrink-0 rounded bg-amber-500/14 px-1.5 py-px text-[11px] font-bold text-amber-800 tabular-nums dark:text-amber-300">
+                  <span className="shrink-0 rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 tabular-nums dark:text-amber-300">
                     {Math.floor(mrAgeHours(mr) / 24)}일
                   </span>
                   <span className="min-w-0 flex-1 truncate">{mr.title}</span>

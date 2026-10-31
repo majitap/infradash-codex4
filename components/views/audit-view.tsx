@@ -186,7 +186,7 @@ export function AuditView() {
                           <UserCell name={e.actor.name} hue={e.actor.hue} secondary={`@${e.actor.username}`} size="sm" />
                         </TableCell>
                         <TableCell>
-                          <span className={cn("rounded px-1.5 py-px text-[11px] font-bold", TYPE_CLASS[e.type])}>{AUDIT_TYPE_LABELS[e.type]}</span>
+                          <span className={cn("rounded px-1.5 py-px text-[0.7778rem] font-bold", TYPE_CLASS[e.type])}>{AUDIT_TYPE_LABELS[e.type]}</span>
                         </TableCell>
                         <TableCell className="font-medium whitespace-nowrap">{e.action}</TableCell>
                         <TableCell className="hidden max-w-72 truncate text-sm text-muted-foreground md:table-cell">{e.target}</TableCell>

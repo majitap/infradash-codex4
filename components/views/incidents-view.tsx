@@ -128,9 +128,9 @@ export function IncidentsView() {
             <div className="grid grid-cols-4 gap-2">
               {severityCounts90d.map((s) => (
                 <div key={s.severity} className="rounded-lg border px-2 py-2 text-center leading-tight">
-                  <span className={cn("inline-block rounded px-1.5 text-[11px] font-extrabold", SEV_CLASS[s.severity])}>{s.severity}</span>
+                  <span className={cn("inline-block rounded px-1.5 text-[0.7778rem] font-extrabold", SEV_CLASS[s.severity])}>{s.severity}</span>
                   <div className="mt-1 text-lg font-extrabold">{s.count}</div>
-                  <div className="text-[10px] text-muted-foreground">{SEVERITY_DESC[s.severity]}</div>
+                  <div className="text-[0.7222rem] text-muted-foreground">{SEVERITY_DESC[s.severity]}</div>
                 </div>
               ))}
             </div>
@@ -185,7 +185,7 @@ export function IncidentsView() {
                 )
               })}
             </ul>
-            <p className="mt-3 text-[11px] text-muted-foreground">막대는 99.0% ~ 100% 구간을 확대해 표시합니다.</p>
+            <p className="mt-3 text-[0.7778rem] text-muted-foreground">막대는 99.0% ~ 100% 구간을 확대해 표시합니다.</p>
           </CardContent>
         </Card>
       </div>
@@ -226,7 +226,7 @@ export function IncidentsView() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className={cn("inline-block rounded px-1.5 py-px text-[11px] font-extrabold", SEV_CLASS[i.severity])} title={SEVERITY_DESC[i.severity]}>
+                          <span className={cn("inline-block rounded px-1.5 py-px text-[0.7778rem] font-extrabold", SEV_CLASS[i.severity])} title={SEVERITY_DESC[i.severity]}>
                             {i.severity}
                           </span>
                         </TableCell>

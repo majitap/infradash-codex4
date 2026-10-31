@@ -69,7 +69,7 @@ export function NavMain() {
                     {badge && badge.value > 0 && (
                       <SidebarMenuBadge
                         className={cn(
-                          "rounded-full px-1.5 text-[11px] font-bold tabular-nums",
+                          "rounded-full px-1.5 text-[0.7778rem] font-bold tabular-nums",
                           badge.alert ? "bg-tone-rose/15 text-tone-rose" : "bg-sidebar-accent text-sidebar-foreground/80"
                         )}
                       >

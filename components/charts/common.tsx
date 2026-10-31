@@ -28,4 +28,4 @@ export function tooltipRow(config: ChartConfig, format: (v: number) => string) {
 }
 
 export const GRID_PROPS = { vertical: false, stroke: "var(--border)", strokeOpacity: 0.7 } as const
-export const AXIS_PROPS = { tickLine: false, axisLine: false, tickMargin: 8, fontSize: 11 } as const
+export const AXIS_PROPS = { tickLine: false, axisLine: false, tickMargin: 10, fontSize: 14 } as const

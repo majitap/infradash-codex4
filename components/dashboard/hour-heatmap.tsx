@@ -25,14 +25,14 @@ export function HourHeatmap({ matrix, className }: { matrix: number[][]; classNa
     <div className={cn("flex flex-col gap-2", className)}>
       <div className="grid grid-cols-[auto_1fr] gap-x-2">
         <div />
-        <div className="grid grid-cols-24 text-[10px] text-muted-foreground">
+        <div className="grid grid-cols-24 text-[0.7222rem] text-muted-foreground">
           {Array.from({ length: 24 }, (_, h) => (
             <span key={h} className={cn("overflow-visible leading-3 whitespace-nowrap", h % 6 !== 0 && "invisible")}>
               {h}시
             </span>
           ))}
         </div>
-        <div className="grid grid-rows-7 gap-[3px] text-[11px] text-muted-foreground">
+        <div className="grid grid-rows-7 gap-[3px] text-[0.7778rem] text-muted-foreground">
           {DAYS.map((d) => (
             <span key={d} className="flex items-center leading-none">
               {d}
@@ -57,7 +57,7 @@ export function HourHeatmap({ matrix, className }: { matrix: number[][]; classNa
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+      <div className="flex items-center justify-between text-[0.7778rem] text-muted-foreground">
         <span>
           가장 활발한 시간: <b className="text-foreground">{DAYS[peak.d]}요일 {peak.h}시</b> (평균 {peak.v.toFixed(1)}개)
         </span>

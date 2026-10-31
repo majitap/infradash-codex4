@@ -3,19 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import {
-  ActivityIcon,
-  CircleArrowUpIcon,
-  CoinsIcon,
-  GaugeIcon,
-  HardDriveIcon,
-  LayoutDashboardIcon,
-  NetworkIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  SparklesIcon,
-  WorkflowIcon,
-} from "lucide-react"
+import { CircleArrowUpIcon, CoinsIcon, GaugeIcon, HardDriveIcon, LayoutDashboardIcon, NetworkIcon, ServerIcon, ShieldCheckIcon, SparklesIcon, WorkflowIcon } from "lucide-react"
 
 import {
   Sidebar,
@@ -33,23 +21,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const navSections = [
     {
-      label: "MENU",
+      label: "모니터링",
       items: [
-        { label: "Dashboard", href: "/", icon: LayoutDashboardIcon },
-        { label: "Pipelines", href: "/pipelines", icon: WorkflowIcon },
-        { label: "Runners", href: "/runners", icon: ServerIcon },
-        { label: "Topology", href: "/topology", icon: NetworkIcon },
-        { label: "DORA Metrics", href: "/dora", icon: GaugeIcon },
+        { label: "대시보드", href: "/", icon: LayoutDashboardIcon },
+        { label: "파이프라인", href: "/pipelines", icon: WorkflowIcon },
+        { label: "러너", href: "/runners", icon: ServerIcon },
+        { label: "인프라 구성도", href: "/topology", icon: NetworkIcon },
+        { label: "배포 성과 지표", href: "/dora", icon: GaugeIcon },
       ],
     },
     {
-      label: "INTELLIGENCE & OPS",
+      label: "분석 및 운영",
       items: [
-        { label: "Gemini AI Ops", href: "/ai-ops", icon: SparklesIcon },
-        { label: "FinOps Cost", href: "/finops", icon: CoinsIcon },
-        { label: "Storage & Disk", href: "/storage", icon: HardDriveIcon },
-        { label: "Security & Audit", href: "/security", icon: ShieldCheckIcon },
-        { label: "Version Upgrade", href: "/upgrade", icon: CircleArrowUpIcon },
+        { label: "AI 운영 센터", href: "/ai-ops", icon: SparklesIcon },
+        { label: "클라우드 비용", href: "/finops", icon: CoinsIcon },
+        { label: "스토리지", href: "/storage", icon: HardDriveIcon },
+        { label: "보안 및 감사", href: "/security", icon: ShieldCheckIcon },
+        { label: "버전 업그레이드", href: "/upgrade", icon: CircleArrowUpIcon },
       ],
     },
   ]
@@ -78,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent className="px-4 py-2 flex flex-col gap-6">
         {navSections.map((sec) => (
           <div key={sec.label} className="flex flex-col gap-1.5">
-            <span className="px-3 text-[10px] font-bold tracking-wider text-slate-400">
+            <span className="px-3 text-[0.7222rem] font-bold tracking-wider text-slate-400">
               {sec.label}
             </span>
             <div className="flex flex-col gap-1">
@@ -117,17 +105,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SparklesIcon className="size-3.5" />
             </div>
             <div>
-              <h5 className="text-xs font-bold">GitLab EKS Fleet</h5>
-              <p className="text-[10px] text-slate-400 mt-0.5">
-                v17.2 · 145 Runners Active
+              <h5 className="text-xs font-bold">GitLab EKS 러너</h5>
+              <p className="text-[0.7222rem] text-slate-400 mt-0.5">
+                v17.2 · 활성 러너 145대
               </p>
             </div>
             <Link
               href="/ai-ops"
               onClick={() => setOpenMobile(false)}
-              className="mt-1 flex items-center justify-center rounded-xl bg-[#5551ff] py-1.5 text-[11px] font-bold text-white transition-opacity hover:opacity-90"
+              className="mt-1 flex items-center justify-center rounded-xl bg-[#5551ff] py-1.5 text-[0.7778rem] font-bold text-white transition-opacity hover:opacity-90"
             >
-              Gemini AI Status
+              AI 운영 현황
             </Link>
           </div>
           {/* Subtle decorative circles */}

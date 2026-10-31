@@ -1,5 +1,7 @@
 "use client"
 
+import { stageLabel } from "@/lib/localization"
+
 import {
   CircleCheckIcon,
   CircleXIcon,
@@ -136,7 +138,7 @@ export function PipelinesView() {
               }))}
             />
             <p className="mt-4 text-xs text-muted-foreground">
-              test 스테이지 실패의 대부분은 web-console e2e와 order-service 통합 테스트에서 발생합니다.
+              테스트 단계 실패의 대부분은 web-console e2e와 order-service 통합 테스트에서 발생합니다.
             </p>
           </CardContent>
         </Card>
@@ -240,7 +242,7 @@ export function PipelinesView() {
                           <div className="mt-0.5 inline-flex items-center gap-1 font-mono text-xs text-muted-foreground">
                             <GitBranchIcon className="size-3" />
                             {p.ref}
-                            {p.failedStage && <span className="ml-1 rounded bg-rose-500/12 px-1 text-[11px] font-bold text-rose-700 dark:text-rose-300">{p.failedStage}</span>}
+                            {p.failedStage && <span className="ml-1 rounded bg-rose-500/12 px-1 text-[0.7778rem] font-bold text-rose-700 dark:text-rose-300">{p.failedStage}</span>}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -249,7 +251,7 @@ export function PipelinesView() {
                         <TableCell className="hidden md:table-cell">
                           <div className="flex items-center gap-2">
                             <UserCell name={p.triggeredBy.name} hue={p.triggeredBy.hue} size="xs" />
-                            <span className="rounded bg-muted px-1.5 py-px text-[11px] font-bold text-muted-foreground">{SOURCE_LABEL[p.source]}</span>
+                            <span className="rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold text-muted-foreground">{SOURCE_LABEL[p.source]}</span>
                           </div>
                         </TableCell>
                         <TableCell className="hidden text-right tabular-nums lg:table-cell">
@@ -276,7 +278,7 @@ export function PipelinesView() {
                   <div className="min-w-0 flex-1 leading-tight">
                     <div className="truncate font-mono text-[13px] font-semibold">{j.job}</div>
                     <div className="truncate text-xs text-muted-foreground">
-                      {j.project} · {j.stage} · {j.runs7d}회
+                      {j.project} · {stageLabel(j.stage)} · {j.runs7d}회
                     </div>
                   </div>
                   <div className="text-right leading-tight">

@@ -102,7 +102,7 @@ export function UpgradeView() {
                   <div className="leading-tight">
                     <div className="font-mono font-bold">{n.version}</div>
                     <div className="text-xs text-muted-foreground">{n.label}</div>
-                    <div className="text-[11px] text-muted-foreground/80">{n.date}</div>
+                    <div className="text-[0.7778rem] text-muted-foreground/80">{n.date}</div>
                   </div>
                 </li>
               ))}

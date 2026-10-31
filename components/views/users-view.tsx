@@ -246,8 +246,8 @@ export function UsersView() {
                             <div className="text-xs text-muted-foreground">{u.title}</div>
                           </TableCell>
                           <TableCell>
-                            <span className={`rounded px-1.5 py-px text-[11px] font-bold ${ROLE_CLASS[u.role]}`}>{u.role}</span>
-                            {u.isAdmin && <span className="ml-1 rounded bg-amber-500/14 px-1.5 py-px text-[11px] font-bold text-amber-800 dark:text-amber-300">관리자</span>}
+                            <span className={`rounded px-1.5 py-px text-[0.7778rem] font-bold ${ROLE_CLASS[u.role]}`}>{u.role}</span>
+                            {u.isAdmin && <span className="ml-1 rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>}
                           </TableCell>
                           <TableCell>
                             <StatusPill status={st.status} label={st.label} icon={st.icon} size="xs" />
