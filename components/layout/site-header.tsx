@@ -10,6 +10,7 @@ import { findNavItem } from "@/lib/nav";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -47,20 +48,22 @@ export function SiteHeader() {
             <span />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="notification-menu">
-            <DropdownMenuLabel>확인이 필요한 알림 · 2건</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem render={<Link href="/incidents" />}>
-              <span className="notification-item">
-                <strong>결제 API 장애 대응 중</strong>
-                <span>payment-service · 인시던트 보기</span>
-              </span>
-            </DropdownMenuItem>
-            <DropdownMenuItem render={<Link href="/storage" />}>
-              <span className="notification-item">
-                <strong>Gitaly 볼륨 사용률 91%</strong>
-                <span>스토리지 용량을 확인하세요</span>
-              </span>
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>확인이 필요한 알림 · 2건</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem render={<Link href="/incidents" />}>
+                <span className="notification-item">
+                  <strong>결제 API 장애 대응 중</strong>
+                  <span>payment-service · 인시던트 보기</span>
+                </span>
+              </DropdownMenuItem>
+              <DropdownMenuItem render={<Link href="/storage" />}>
+                <span className="notification-item">
+                  <strong>Gitaly 볼륨 사용률 91%</strong>
+                  <span>스토리지 용량을 확인하세요</span>
+                </span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
         <ThemeToggle />
