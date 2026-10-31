@@ -32,7 +32,7 @@ export function usePipelineRange() {
       aria-label="기간 선택"
     >
       {RANGES.map((r) => (
-        <ToggleGroupItem key={r.value} value={r.value} className="px-3">
+        <ToggleGroupItem key={r.value} value={r.value} className="px-4">
           {r.label}
         </ToggleGroupItem>
       ))}

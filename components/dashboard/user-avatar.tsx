@@ -10,7 +10,7 @@ type UserAvatarProps = {
 }
 
 const SIZES = {
-  xs: "size-6 text-[0.7778rem]",
+  xs: "size-6 text-[0.875rem]",
   sm: "size-7 text-xs",
   md: "size-9 text-sm",
   lg: "size-12 text-base",
@@ -40,7 +40,7 @@ export function UserCell({
   size?: UserAvatarProps["size"]
 }) {
   return (
-    <div className="flex min-w-0 items-center gap-2.5">
+    <div className="flex min-w-0 items-center gap-4">
       <UserAvatar name={name} hue={hue} size={size} />
       <div className="min-w-0 leading-tight">
         <div className="truncate font-bold">{name}</div>

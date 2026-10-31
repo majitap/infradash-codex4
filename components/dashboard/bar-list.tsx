@@ -28,9 +28,9 @@ export function BarList({
 }) {
   const top = max ?? Math.max(...items.map((i) => i.value), 1)
   return (
-    <ul className={cn("flex flex-col gap-2.5", className)}>
+    <ul className={cn("flex flex-col gap-4", className)}>
       {items.map((item) => (
-        <li key={item.key} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1">
+        <li key={item.key} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2">
           <div className="flex min-w-0 items-center justify-between gap-2 text-sm">
             <span className="truncate font-medium">{item.label}</span>
             {item.secondary && <span className="shrink-0 text-xs text-muted-foreground">{item.secondary}</span>}

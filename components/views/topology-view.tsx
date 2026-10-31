@@ -28,14 +28,14 @@ export function TopologyView() {
   ]
 
   return (
-    <div className="flex flex-col gap-6 px-6 pb-12 max-w-7xl mx-auto w-full">
+    <div className="legacy-page flex w-full flex-col gap-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-slate-900">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             인프라 구성도
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-2">
             Cloudflare 엣지부터 Rails Puma, Praefect, PostgreSQL, EKS 러너 플릿까지의 실시간 아키텍처
           </p>
         </div>
@@ -47,7 +47,7 @@ export function TopologyView() {
             onClick={() => toast.success("토폴로지 메트릭을 동기화했습니다.")}
             className="rounded-full bg-white hover:bg-slate-50 border-slate-200 text-xs font-bold px-4 h-9 shadow-xs text-slate-700"
           >
-            <RefreshCwIcon className="size-3.5 mr-1.5" />
+            <RefreshCwIcon className="size-3.5 mr-2" />
             새로고침
           </Button>
         </div>
@@ -59,9 +59,9 @@ export function TopologyView() {
           <button
             key={c.key}
             onClick={() => setCategoryFilter(c.key)}
-            className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
+            className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
               categoryFilter === c.key
-                ? "bg-[#5551ff] text-white shadow-xs font-bold"
+                ? "bg-[#6155ed] text-white shadow-xs font-bold"
                 : "bg-white border border-slate-200/80 text-slate-600 hover:bg-slate-50"
             }`}
           >
@@ -74,17 +74,17 @@ export function TopologyView() {
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Architecture Grid (8 cols) */}
         <div className="lg:col-span-8 flex flex-col gap-4">
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {filteredNodes.map((node) => {
               const isSelected = selectedNode.id === node.id
               return (
                 <div
                   key={node.id}
                   onClick={() => setSelectedNode(node)}
-                  className={`group relative flex cursor-pointer flex-col justify-between rounded-3xl border p-5 transition-all ${
+                  className={`group relative flex cursor-pointer flex-col justify-between rounded-3xl border p-6 transition-all ${
                     isSelected
-                      ? "border-[#5551ff] bg-white ring-2 ring-[#5551ff]/20 shadow-md"
-                      : "border-slate-200/70 bg-white hover:border-[#5551ff]/50 shadow-xs"
+                      ? "border-[#6155ed] bg-white ring-2 ring-[#6155ed]/20 shadow-md"
+                      : "border-slate-200/70 bg-white hover:border-[#6155ed]/50 shadow-xs"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -92,49 +92,49 @@ export function TopologyView() {
                       <span className={`size-2.5 rounded-full ${
                         node.status === "healthy" ? "bg-emerald-400" : "bg-amber-400"
                       }`} />
-                      <span className="text-[0.7778rem] font-bold text-slate-400">
+                      <span className="text-[0.875rem] font-bold text-slate-400">
                         {node.categoryLabel}
                       </span>
                     </div>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[0.6667rem] font-mono text-slate-500 font-semibold">
+                    <span className="rounded-full bg-slate-100 px-2 py-2 text-[0.8125rem] font-mono text-slate-500 font-semibold">
                       {node.zone}
                     </span>
                   </div>
 
-                  <div className="my-3">
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#5551ff] transition-colors">
+                  <div className="my-4">
+                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#6155ed] transition-colors">
                       {node.name}
                     </h4>
-                    <p className="mt-1 line-clamp-1 text-xs text-slate-500">
+                    <p className="mt-2 line-clamp-1 text-xs text-slate-500">
                       {node.description}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-2.5 text-xs text-slate-500">
+                  <div className="flex items-center justify-between border-t border-slate-100 pt-4 text-xs text-slate-500">
                     {node.metrics.cpu !== undefined ? (
-                      <span className="flex items-center gap-1 text-[0.7778rem]">
+                      <span className="flex items-center gap-2 text-[0.875rem]">
                         <CpuIcon className="size-3 text-slate-400" />
                         CPU {node.metrics.cpu}%
                       </span>
                     ) : node.metrics.storage ? (
-                      <span className="flex items-center gap-1 text-[0.7778rem]">
+                      <span className="flex items-center gap-2 text-[0.875rem]">
                         <HardDriveIcon className="size-3 text-slate-400" />
                         {node.metrics.storage}
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-[0.7778rem]">
+                      <span className="flex items-center gap-2 text-[0.875rem]">
                         <ActivityIcon className="size-3 text-slate-400" />
                         {node.metrics.qps ?? "정상"}
                       </span>
                     )}
 
                     {node.metrics.latency && (
-                      <span className="font-mono text-slate-800 font-bold text-[0.7778rem]">
+                      <span className="font-mono text-slate-800 font-bold text-[0.875rem]">
                         {node.metrics.latency}
                       </span>
                     )}
                     {node.metrics.instances && (
-                      <span className="font-mono text-slate-800 font-bold text-[0.7778rem]">
+                      <span className="font-mono text-slate-800 font-bold text-[0.875rem]">
                         {node.metrics.instances}
                       </span>
                     )}
@@ -149,33 +149,33 @@ export function TopologyView() {
         <div className="lg:col-span-4 flex flex-col gap-4">
           <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs sticky top-24 flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+              <span className="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-600">
                 {selectedNode.categoryLabel}
               </span>
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
+              <span className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600">
                 <CheckCircle2Icon className="size-3.5" />
                 {selectedNode.status === "healthy" ? "정상" : "주의"}
               </span>
             </div>
 
             <div>
-              <h3 className="text-base font-black text-slate-900">
+              <h3 className="text-base font-bold text-slate-900">
                 {selectedNode.name}
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-400 mt-2">
                 위치: {selectedNode.zone}
               </p>
             </div>
 
-            <p className="rounded-2xl bg-slate-50 border border-slate-100 p-3 text-xs text-slate-600 leading-relaxed">
+            <p className="rounded-2xl bg-slate-50 border border-slate-100 p-4 text-xs text-slate-600 leading-relaxed">
               {selectedNode.description}
             </p>
 
-            <div className="flex flex-col gap-3 pt-1">
+            <div className="flex flex-col gap-4 pt-2">
               <h5 className="text-xs font-bold text-slate-800">실시간 텔레메트리</h5>
 
               {selectedNode.metrics.cpu !== undefined && (
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>CPU 사용률</span>
                     <strong className="text-slate-800">{selectedNode.metrics.cpu}%</strong>
@@ -185,7 +185,7 @@ export function TopologyView() {
               )}
 
               {selectedNode.metrics.memory !== undefined && (
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>메모리 점유율</span>
                     <strong className="text-slate-800">{selectedNode.metrics.memory}%</strong>
@@ -195,26 +195,26 @@ export function TopologyView() {
               )}
 
               {selectedNode.metrics.latency && (
-                <div className="flex justify-between rounded-xl bg-slate-50 p-2.5 text-xs text-slate-500">
+                <div className="flex justify-between rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
                   <span>응답 레이턴시</span>
                   <strong className="font-mono text-slate-900">{selectedNode.metrics.latency}</strong>
                 </div>
               )}
 
               {selectedNode.metrics.qps && (
-                <div className="flex justify-between rounded-xl bg-slate-50 p-2.5 text-xs text-slate-500">
+                <div className="flex justify-between rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
                   <span>처리량 (QPS)</span>
                   <strong className="font-mono text-slate-900">{selectedNode.metrics.qps}</strong>
                 </div>
               )}
             </div>
 
-            <div className="rounded-2xl bg-[#5551ff]/10 border border-[#5551ff]/20 p-3 text-xs">
-              <div className="flex items-center gap-1.5 font-bold text-[#5551ff]">
+            <div className="rounded-2xl bg-[#6155ed]/10 border border-[#6155ed]/20 p-4 text-xs">
+              <div className="flex items-center gap-2 font-bold text-[#6155ed]">
                 <SparklesIcon className="size-3.5" />
                 <span>Gemini 진단</span>
               </div>
-              <p className="mt-1 text-[0.7778rem] text-slate-600 leading-relaxed">
+              <p className="mt-2 text-[0.875rem] text-slate-600 leading-relaxed">
                 {selectedNode.status === "healthy"
                   ? "최근 24시간 동안 안정적인 상태입니다. 리소스 임계치 초과 징후가 없습니다."
                   : "I/O 큐 대기 시간 증가 및 메모리 점유율 상승 추세가 감지되었습니다. 자동 완화 조치를 실행할 수 있습니다."}

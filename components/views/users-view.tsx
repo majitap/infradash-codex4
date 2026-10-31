@@ -139,7 +139,7 @@ export function UsersView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>역할 분포</CardTitle>
@@ -183,7 +183,7 @@ export function UsersView() {
         </Card>
       </div>
 
-      <div className="px-4 lg:px-6">
+      <div className="">
         <Card>
           <CardHeader>
             <CardTitle>사용자</CardTitle>
@@ -192,14 +192,14 @@ export function UsersView() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
                 <TabsList className="h-auto flex-wrap">
                   {FILTERS.map((f) => (
                     <TabsTrigger key={f.value} value={f.value}>
                       {f.icon && <f.icon />}
                       {f.label}
-                      <Badge variant="secondary" className="px-1.5 tabular-nums">
+                      <Badge variant="secondary" className="px-2 tabular-nums">
                         {rowsFor(f.value).length}
                       </Badge>
                     </TabsTrigger>
@@ -246,8 +246,8 @@ export function UsersView() {
                             <div className="text-xs text-muted-foreground">{u.title}</div>
                           </TableCell>
                           <TableCell>
-                            <span className={`rounded px-1.5 py-px text-[0.7778rem] font-bold ${ROLE_CLASS[u.role]}`}>{u.role}</span>
-                            {u.isAdmin && <span className="ml-1 rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>}
+                            <span className={`rounded px-2 py-px text-[0.875rem] font-bold ${ROLE_CLASS[u.role]}`}>{u.role}</span>
+                            {u.isAdmin && <span className="ml-2 rounded bg-amber-500/14 px-2 py-px text-[0.875rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>}
                           </TableCell>
                           <TableCell>
                             <StatusPill status={st.status} label={st.label} icon={st.icon} size="xs" />

@@ -77,9 +77,9 @@ export function CommitsView() {
 
   return (
     <>
-      <Section className="flex flex-wrap items-center justify-between gap-3">
+      <Section className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-extrabold tracking-tight">커밋 순위</h2>
+          <h2 className="text-lg font-bold tracking-tight">커밋 순위</h2>
           <p className="text-sm text-muted-foreground">
             {periodLabel} ({rangeLabel}) · 기본 브랜치 기준, 머지 커밋 제외
           </p>
@@ -92,7 +92,7 @@ export function CommitsView() {
           aria-label="집계 기간"
         >
           {PERIODS.map((p) => (
-            <ToggleGroupItem key={p} value={p} className="px-3">
+            <ToggleGroupItem key={p} value={p} className="px-4">
               {PERIOD_LABELS[p]}
             </ToggleGroupItem>
           ))}
@@ -140,7 +140,7 @@ export function CommitsView() {
         <Podium rows={rows} periodLabel={periodLabel} />
       </Section>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-5">
         <Card className="@5xl/main:col-span-3">
           <CardHeader>
             <CardTitle>4위 ~ 10위</CardTitle>
@@ -168,7 +168,7 @@ export function CommitsView() {
             />
             <div>
               <div className="mb-2 text-sm font-bold">연속 커밋 스트릭</div>
-              <ul className="flex flex-col gap-1.5">
+              <ul className="flex flex-col gap-2">
                 {topStreaks.map((u, i) => (
                   <li key={u.id} className="flex items-center justify-between gap-2 text-sm">
                     <span className="flex items-center gap-2">
@@ -176,7 +176,7 @@ export function CommitsView() {
                       <span className="font-medium">{u.name}</span>
                       <span className="text-xs text-muted-foreground">{u.department}</span>
                     </span>
-                    <span className="inline-flex items-center gap-1 font-bold text-orange-600 tabular-nums dark:text-orange-300">
+                    <span className="inline-flex items-center gap-2 font-bold text-orange-600 tabular-nums dark:text-orange-300">
                       <FlameIcon className="size-3.5" />
                       {u.streakDays}일
                     </span>
@@ -189,7 +189,7 @@ export function CommitsView() {
       </div>
 
       <SectionHeader title="활동 패턴" description="언제, 어디에, 누가 커밋하는지" />
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-4">
         <Card className="@6xl/main:col-span-2">
           <CardHeader>
             <CardTitle>커밋 시간대</CardTitle>
@@ -268,9 +268,9 @@ export function CommitsView() {
                       <TableRow key={c.sha}>
                         <TableCell>
                           <div className="truncate font-medium">{c.message}</div>
-                          <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-                            <code className="rounded bg-muted px-1 py-px font-mono">{c.sha}</code>
-                            <span className="inline-flex items-center gap-1 font-mono">
+                          <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                            <code className="rounded bg-muted px-2 py-px font-mono">{c.sha}</code>
+                            <span className="inline-flex items-center gap-2 font-mono">
                               <GitBranchIcon className="size-3" />
                               {c.branch}
                             </span>

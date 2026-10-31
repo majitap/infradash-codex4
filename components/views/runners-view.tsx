@@ -128,7 +128,7 @@ export function RunnersView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>러너 상태</CardTitle>
@@ -169,7 +169,7 @@ export function RunnersView() {
               .map((r) => {
                 const m = STATUS_META[r.status]
                 return (
-                  <div key={r.id} className="flex items-center gap-3 rounded-lg border px-3 py-2">
+                  <div key={r.id} className="flex items-center gap-4 rounded-lg border px-4 py-2">
                     <div className="min-w-0 flex-1 leading-tight">
                       <div className="truncate font-mono text-[13px] font-semibold">{r.name}</div>
                       <div className="truncate text-xs text-muted-foreground">{r.note ?? `마지막 접속 ${relativeTime(r.lastContact)}`}</div>
@@ -182,7 +182,7 @@ export function RunnersView() {
         </Card>
       </div>
 
-      <div className="px-4 lg:px-6">
+      <div className="">
         <Card>
           <CardHeader>
             <CardTitle>러너</CardTitle>
@@ -194,7 +194,7 @@ export function RunnersView() {
                 {(["all", "online", "offline", "paused"] as const).map((key) => (
                   <TabsTrigger key={key} value={key}>
                     {key === "all" ? "전체" : STATUS_META[key].label}
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {runnerCounts[key]}
                     </Badge>
                   </TabsTrigger>
@@ -240,20 +240,20 @@ export function RunnersView() {
                           </div>
                         </TableCell>
                         <TableCell className="hidden xl:table-cell">
-                          <div className="flex max-w-48 flex-wrap gap-1">
+                          <div className="flex max-w-48 flex-wrap gap-2">
                             {r.tags.map((t) => (
-                              <span key={t} className="rounded bg-muted px-1.5 py-px font-mono text-[0.7778rem]">
+                              <span key={t} className="rounded bg-muted px-2 py-px font-mono text-[0.875rem]">
                                 {t}
                               </span>
                             ))}
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className={cn("font-mono text-xs tabular-nums", outdated && "rounded bg-amber-500/14 px-1.5 py-px font-bold text-amber-800 dark:text-amber-300")}>{r.version}</span>
+                          <span className={cn("font-mono text-xs tabular-nums", outdated && "rounded bg-amber-500/14 px-2 py-px font-bold text-amber-800 dark:text-amber-300")}>{r.version}</span>
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
                           {r.status === "online" ? (
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-2">
                               <Meter value={r.cpuLoad} label="CPU" />
                               <Meter value={r.memUsed} label="MEM" />
                             </div>
@@ -272,7 +272,7 @@ export function RunnersView() {
                         </TableCell>
                         <TableCell className="hidden text-right text-xs text-muted-foreground whitespace-nowrap lg:table-cell">{relativeTime(r.lastContact)}</TableCell>
                         <TableCell className="text-right">
-                          <div className="flex justify-end gap-1">
+                          <div className="flex justify-end gap-2">
                             <Button variant="outline" size="sm" onClick={() => togglePause(r)} disabled={r.status === "offline"}>
                               {isPaused ? <PlayIcon /> : <CirclePauseIcon />}
                               <span className="hidden sm:inline">{isPaused ? "재개" : "일시중지"}</span>

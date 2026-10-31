@@ -13,9 +13,9 @@ export function SectionHeader({
   className?: string
 }) {
   return (
-    <div className={cn("flex flex-wrap items-end justify-between gap-2 px-4 lg:px-6", className)}>
+    <div className={cn("flex flex-wrap items-end justify-between gap-2  ", className)}>
       <div>
-        <h2 className="text-lg font-extrabold tracking-tight">{title}</h2>
+        <h2 className="text-lg font-bold tracking-tight">{title}</h2>
         {description && <p className="text-sm text-muted-foreground">{description}</p>}
       </div>
       {action}
@@ -25,5 +25,5 @@ export function SectionHeader({
 
 /** Horizontal page padding wrapper. */
 export function Section({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("px-4 lg:px-6", className)}>{children}</div>
+  return <div className={cn(" ", className)}>{children}</div>
 }

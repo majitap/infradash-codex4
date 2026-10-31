@@ -126,33 +126,33 @@ export function AiOpsView() {
   }
 
   return (
-    <div className="flex flex-col gap-6 px-6 pb-12 max-w-7xl mx-auto w-full">
+    <div className="legacy-page flex w-full flex-col gap-8">
       {/* 1. Header Banner - Clean white card with gentle periwinkle accent */}
       <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#5551ff] text-white shadow-sm shadow-[#5551ff]/25">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#6155ed] text-white shadow-sm shadow-[#6155ed]/25">
             <SparklesIcon className="size-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-black text-slate-900">Gemini AI 운영 센터</h2>
-              <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[0.7222rem] font-bold text-emerald-600">
+              <h2 className="text-xl font-bold text-slate-900">Gemini AI 운영 센터</h2>
+              <span className="rounded-full bg-emerald-50 border border-emerald-100 px-4 py-2 text-[0.875rem] font-bold text-emerald-600">
                 모니터링 중
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-400 mt-2">
               GitLab EKS 클러스터, Praefect 스토리지 및 CI/CD 파이프라인의 자율 진단
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-4">
           <Button
             size="sm"
             variant="outline"
             onClick={() => toast.success("Gemini가 인프라 텔레메트리를 재검사했습니다. 신규 이상 없음.")}
             className="rounded-full bg-white hover:bg-slate-50 border-slate-200 text-xs font-bold px-4 h-9 shadow-xs text-slate-700"
           >
-            <RefreshCwIcon className="size-3.5 mr-1.5" />
+            <RefreshCwIcon className="size-3.5 mr-2" />
             재스캔 실행
           </Button>
         </div>
@@ -163,22 +163,22 @@ export function AiOpsView() {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-900">Gemini에게 원인 물어보기</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-400 mt-2">
               자연어로 러너 상태, 파이프라인 오류, 스토리지 병목 원인을 질문하세요.
             </p>
           </div>
-          <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-3 py-1 text-xs font-semibold">
+          <span className="rounded-full bg-[#6155ed]/10 text-[#6155ed] px-4 py-2 text-xs font-semibold">
             Gemini 2.5 진단 데모
           </span>
         </div>
 
         {/* Quick Prompts */}
-        <div className="flex flex-wrap gap-2 pt-1">
+        <div className="flex flex-wrap gap-2 pt-2">
           {SAMPLE_PROMPTS.map((prompt) => (
             <button
               key={prompt}
               onClick={() => handlePrompt(prompt)}
-              className="rounded-full border border-slate-200/80 bg-slate-50 hover:bg-[#5551ff]/10 hover:border-[#5551ff]/30 hover:text-[#5551ff] px-3.5 py-1.5 text-xs text-slate-600 font-medium transition-all"
+              className="rounded-full border border-slate-200/80 bg-slate-50 hover:bg-[#6155ed]/10 hover:border-[#6155ed]/30 hover:text-[#6155ed] px-4 py-2 text-xs text-slate-600 font-medium transition-all"
             >
               {prompt}
             </button>
@@ -186,35 +186,35 @@ export function AiOpsView() {
         </div>
 
         {/* Chat Window */}
-        <div className="flex max-h-80 flex-col gap-3 overflow-y-auto rounded-2xl border border-slate-100 bg-[#f9fafc] p-4">
+        <div className="flex max-h-80 flex-col gap-4 overflow-y-auto rounded-2xl border border-slate-100 bg-[#f9fafc] p-4">
           {chatLog.map((msg, idx) => (
             <div
               key={idx}
-              className={`flex gap-3 text-xs ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex gap-4 text-xs ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               {msg.sender === "gemini" && (
-                <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-[#5551ff] text-white shadow-xs">
+                <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-[#6155ed] text-white shadow-xs">
                   <SparklesIcon className="size-3.5" />
                 </div>
               )}
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 leading-relaxed ${
+                className={`max-w-[85%] rounded-2xl px-4 py-4 leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-[#5551ff] text-white font-medium shadow-xs"
+                    ? "bg-[#6155ed] text-white font-medium shadow-xs"
                     : "border border-slate-200/60 bg-white text-slate-800 shadow-xs"
                 }`}
               >
                 <p>{msg.text}</p>
                 {msg.details && (
-                  <div className="mt-3 flex flex-col gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
+                  <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4 text-xs text-slate-500">
                     <span className="font-bold text-slate-800">권장 조치:</span>
-                    <ul className="flex flex-col gap-1 pl-1">
+                    <ul className="flex flex-col gap-2 pl-2">
                       {msg.details.steps.map((st, sIdx) => (
                         <li key={sIdx}>{st}</li>
                       ))}
                     </ul>
                     {msg.details.code && (
-                      <div className="mt-2 rounded-xl bg-slate-900 p-3 font-mono text-[0.7778rem] text-slate-100 overflow-x-auto">
+                      <div className="mt-2 rounded-xl bg-slate-900 p-4 font-mono text-[0.875rem] text-slate-100 overflow-x-auto">
                         <pre>{msg.details.code}</pre>
                       </div>
                     )}
@@ -225,7 +225,7 @@ export function AiOpsView() {
           ))}
           {isAnalyzing && (
             <div className="flex items-center gap-2 text-xs text-slate-400">
-              <SparklesIcon className="size-3.5 animate-spin text-[#5551ff]" />
+              <SparklesIcon className="size-3.5 animate-spin text-[#6155ed]" />
               Gemini가 인프라 텔레메트리를 분석 중입니다...
             </div>
           )}
@@ -243,21 +243,21 @@ export function AiOpsView() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="질문을 입력하세요..."
-            className="rounded-full bg-slate-50 border-slate-200 text-xs px-4 h-11 focus-visible:ring-[#5551ff]"
+            className="rounded-full bg-slate-50 border-slate-200 text-xs px-4 h-11 focus-visible:ring-[#6155ed]"
           />
           <Button
             type="submit"
             disabled={!query.trim() || isAnalyzing}
-            className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold px-6 h-11 shadow-sm shadow-[#5551ff]/20"
+            className="rounded-full bg-[#6155ed] hover:bg-[#4743eb] text-white text-xs font-bold px-6 h-11 shadow-sm shadow-[#6155ed]/20"
           >
-            <SendIcon className="size-3.5 mr-1.5" />
+            <SendIcon className="size-3.5 mr-2" />
             질문
           </Button>
         </form>
       </div>
 
       {/* 3. Active Anomalies Grid */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-900">감지된 이상 징후</h3>
           <span className="text-xs text-slate-400">
@@ -269,7 +269,7 @@ export function AiOpsView() {
           {anomalies.map((item) => (
             <div
               key={item.id}
-              className={`rounded-3xl border p-5 flex flex-col justify-between transition-all ${
+              className={`rounded-3xl border p-6 flex flex-col justify-between transition-all ${
                 item.resolved
                   ? "border-slate-100 bg-slate-50/60 opacity-60"
                   : "border-slate-200/80 bg-white shadow-xs"
@@ -277,7 +277,7 @@ export function AiOpsView() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className={`rounded-full px-2.5 py-0.5 text-[0.7222rem] font-bold ${
+                  <span className={`rounded-full px-4 py-2 text-[0.875rem] font-bold ${
                     item.resolved
                       ? "bg-slate-100 text-slate-500"
                       : item.severity === "critical"
@@ -286,7 +286,7 @@ export function AiOpsView() {
                   }`}>
                     {item.resolved ? "완화됨" : { critical: "심각", warning: "주의", info: "안내" }[item.severity]}
                   </span>
-                  <span className="text-[0.7778rem] font-semibold text-[#5551ff]">
+                  <span className="text-[0.875rem] font-semibold text-[#6155ed]">
                     신뢰도 {item.confidence}%
                   </span>
                 </div>
@@ -294,23 +294,23 @@ export function AiOpsView() {
                 <h4 className="text-sm font-bold text-slate-900 leading-snug">
                   {item.title}
                 </h4>
-                <p className="mt-1 text-xs text-slate-500 leading-relaxed">
+                <p className="mt-2 text-xs text-slate-500 leading-relaxed">
                   {item.summary}
                 </p>
 
-                <div className="mt-3 rounded-2xl bg-slate-50 border border-slate-100 p-3 text-xs text-slate-600">
+                <div className="mt-4 rounded-2xl bg-slate-50 border border-slate-100 p-4 text-xs text-slate-600">
                   <strong className="text-slate-800">근본 원인: </strong>
                   {item.rootCause}
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-                <span className="text-[0.7222rem] text-slate-400">
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+                <span className="text-[0.875rem] text-slate-400">
                   {item.timestamp}
                 </span>
 
                 {item.resolved ? (
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
+                  <span className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600">
                     <CheckCircle2Icon className="size-3.5" />
                     조치 완료
                   </span>
@@ -318,9 +318,9 @@ export function AiOpsView() {
                   <Button
                     size="sm"
                     onClick={() => handleMitigate(item.id, item.actionLabel)}
-                    className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold px-4 h-8 shadow-xs"
+                    className="rounded-full bg-[#6155ed] hover:bg-[#4743eb] text-white text-xs font-bold px-4 h-8 shadow-xs"
                   >
-                    <Wand2Icon className="size-3 mr-1" />
+                    <Wand2Icon className="size-3 mr-2" />
                     {item.actionLabel}
                   </Button>
                 )}

@@ -1,127 +1,185 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { CircleArrowUpIcon, CoinsIcon, GaugeIcon, HardDriveIcon, LayoutDashboardIcon, NetworkIcon, ServerIcon, ShieldCheckIcon, SparklesIcon, WorkflowIcon } from "lucide-react"
-
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  CircleHelp,
+  FolderGit2,
+  Gauge,
+  HardDrive,
+  LayoutDashboard,
+  Network,
+  Server,
+  ShieldCheck,
+  Siren,
+  Sparkles,
+  Workflow,
+  Wallet,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname()
-  const { setOpenMobile } = useSidebar()
+const sections = [
+  {
+    label: "워크스페이스",
+    items: [
+      { label: "개요", href: "/", icon: LayoutDashboard },
+      { label: "파이프라인", href: "/pipelines", icon: Workflow },
+      { label: "러너", href: "/runners", icon: Server },
+      { label: "인프라 구성도", href: "/topology", icon: Network },
+      { label: "인시던트", href: "/incidents", icon: Siren },
+    ],
+  },
+  {
+    label: "인사이트",
+    items: [
+      { label: "배포 성과", href: "/dora", icon: Gauge },
+      { label: "클라우드 비용", href: "/finops", icon: Wallet },
+      { label: "AI 운영 센터", href: "/ai-ops", icon: Sparkles },
+    ],
+  },
+  {
+    label: "관리",
+    items: [
+      { label: "프로젝트", href: "/projects", icon: FolderGit2 },
+      { label: "스토리지", href: "/storage", icon: HardDrive },
+      { label: "보안", href: "/security", icon: ShieldCheck },
+    ],
+  },
+];
 
-  const currentPath = pathname ? pathname.replace(/\/+$/, "") || "/" : "/"
-
-  const navSections = [
-    {
-      label: "모니터링",
-      items: [
-        { label: "대시보드", href: "/", icon: LayoutDashboardIcon },
-        { label: "파이프라인", href: "/pipelines", icon: WorkflowIcon },
-        { label: "러너", href: "/runners", icon: ServerIcon },
-        { label: "인프라 구성도", href: "/topology", icon: NetworkIcon },
-        { label: "배포 성과 지표", href: "/dora", icon: GaugeIcon },
-      ],
-    },
-    {
-      label: "분석 및 운영",
-      items: [
-        { label: "AI 운영 센터", href: "/ai-ops", icon: SparklesIcon },
-        { label: "클라우드 비용", href: "/finops", icon: CoinsIcon },
-        { label: "스토리지", href: "/storage", icon: HardDriveIcon },
-        { label: "보안 및 감사", href: "/security", icon: ShieldCheckIcon },
-        { label: "버전 업그레이드", href: "/upgrade", icon: CircleArrowUpIcon },
-      ],
-    },
-  ]
-
+export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname()?.replace(/\/+$/, "") || "/";
+  const { setOpenMobile } = useSidebar();
+  const close = () => setOpenMobile(false);
   return (
-    <Sidebar collapsible="offcanvas" className="border-r border-slate-200/70 bg-white" {...props}>
-      {/* Brand Header */}
-      <SidebarHeader className="px-6 py-5">
+    <Sidebar collapsible="offcanvas" className="app-sidebar" {...props}>
+      <SidebarHeader className="brand-header">
         <Link
           href="/"
-          onClick={() => setOpenMobile(false)}
-          className="flex items-center gap-2.5 group"
+          onClick={close}
+          className="brand-link"
+          aria-label="InfraDash 홈"
         >
-          <div className="flex size-9 items-center justify-center rounded-2xl bg-[#5551ff] text-white shadow-sm shadow-[#5551ff]/30">
-            <SparklesIcon className="size-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-black tracking-tight text-slate-900 group-hover:text-[#5551ff] transition-colors">
-              infradash
-            </span>
-          </div>
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            aria-hidden="true"
+          >
+            <rect
+              x="2"
+              y="16"
+              width="7"
+              height="14"
+              rx="3.5"
+              fill="currentColor"
+            />
+            <rect
+              x="12"
+              y="2"
+              width="7"
+              height="28"
+              rx="3.5"
+              fill="currentColor"
+            />
+            <rect
+              x="22"
+              y="9"
+              width="7"
+              height="21"
+              rx="3.5"
+              fill="currentColor"
+            />
+          </svg>
+          <span>
+            infradash<span className="brand-period">.</span>
+          </span>
         </Link>
       </SidebarHeader>
-
-      {/* Nav Items */}
-      <SidebarContent className="px-4 py-2 flex flex-col gap-6">
-        {navSections.map((sec) => (
-          <div key={sec.label} className="flex flex-col gap-1.5">
-            <span className="px-3 text-[0.7222rem] font-bold tracking-wider text-slate-400">
-              {sec.label}
-            </span>
-            <div className="flex flex-col gap-1">
-              {sec.items.map((item) => {
-                const isActive = currentPath === item.href
-                return (
+      <SidebarContent className="nav-content">
+        <div className="workspace-label">
+          <span className="workspace-symbol">M</span>
+          <div>
+            <strong>Majitap</strong>
+            <span>GitLab 워크스페이스</span>
+          </div>
+        </div>
+        <nav aria-label="주 메뉴" className="nav-sections">
+          {sections.map((section) => (
+            <div className="nav-section" key={section.label}>
+              <p className="nav-label">{section.label}</p>
+              <div className="nav-items">
+                {section.items.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setOpenMobile(false)}
-                    className={`relative flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-xs font-semibold transition-all ${
-                      isActive
-                        ? "bg-[#5551ff] text-white shadow-sm shadow-[#5551ff]/25 font-bold"
-                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                    }`}
+                    onClick={close}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                    className="nav-link"
                   >
-                    <item.icon
-                      className={`size-4 ${
-                        isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600"
-                      }`}
-                    />
+                    <item.icon size={20} strokeWidth={1.7} />
                     <span>{item.label}</span>
+                    {item.href === "/incidents" && (
+                      <span className="nav-count">2</span>
+                    )}
                   </Link>
-                )
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+          <details className="more-nav">
+            <summary>
+              더 보기
+              <ChevronDown size={16} />
+            </summary>
+            <div className="nav-items">
+              {[
+                { label: "커밋", href: "/commits" },
+                { label: "머지 리퀘스트", href: "/merge-requests" },
+                { label: "사용자", href: "/users" },
+                { label: "권한 관리", href: "/access" },
+                { label: "감사 로그", href: "/audit" },
+                { label: "버전 업그레이드", href: "/upgrade" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="nav-link"
+                  onClick={close}
+                  aria-current={pathname === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </details>
+        </nav>
       </SidebarContent>
-
-      {/* Bottom Info Card like coursie mobile app card */}
-      <SidebarFooter className="p-4">
-        <div className="relative overflow-hidden rounded-2xl bg-slate-950 p-4 text-white shadow-md">
-          <div className="relative z-10 flex flex-col gap-2">
-            <div className="flex size-7 items-center justify-center rounded-full bg-white/10 text-[#8b87ff]">
-              <SparklesIcon className="size-3.5" />
-            </div>
-            <div>
-              <h5 className="text-xs font-bold">GitLab EKS 러너</h5>
-              <p className="text-[0.7222rem] text-slate-400 mt-0.5">
-                v17.2 · 활성 러너 145대
-              </p>
-            </div>
-            <Link
-              href="/ai-ops"
-              onClick={() => setOpenMobile(false)}
-              className="mt-1 flex items-center justify-center rounded-xl bg-[#5551ff] py-1.5 text-[0.7778rem] font-bold text-white transition-opacity hover:opacity-90"
-            >
-              AI 운영 현황
-            </Link>
+      <SidebarFooter className="nav-footer">
+        <Link href="/upgrade" className="nav-support" onClick={close}>
+          <CircleHelp size={18} />
+          <span>운영 가이드</span>
+          <ArrowUpRight size={16} />
+        </Link>
+        <div className="sidebar-person">
+          <span className="person-avatar">지</span>
+          <div>
+            <strong>김지원</strong>
+            <span>인프라 관리자</span>
           </div>
-          {/* Subtle decorative circles */}
-          <div className="absolute -right-4 -bottom-4 size-24 rounded-full bg-[#5551ff]/20 blur-xl pointer-events-none" />
+          <span className="person-dot" title="온라인" />
         </div>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

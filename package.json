@@ -1,12 +1,13 @@
 {
-  "name": "infradash-codex3",
+  "name": "infradash-codex4",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:spacing": "node scripts/check-spacing.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -22,6 +23,7 @@
     "lucide-react": "^1.65.0",
     "next": "16.4.3",
     "next-themes": "^0.4.6",
+    "pretendard": "^1.3.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "recharts": "^3.8.0",
@@ -40,5 +42,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "Gemini Edition 기반 한글화 및 가독성 개선판"
+  "description": "8px 그리드 기반 GitLab 인프라 운영 대시보드"
 }

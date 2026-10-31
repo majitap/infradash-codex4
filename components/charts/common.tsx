@@ -20,7 +20,7 @@ export function tooltipRow(config: ChartConfig, format: (v: number) => string) {
       <div className="flex w-full items-center gap-2">
         <span className="size-2.5 shrink-0 rounded-[3px]" style={{ background: color }} />
         <span className="text-muted-foreground">{config[key]?.label ?? key}</span>
-        <span className="ml-auto pl-3 font-bold text-foreground tabular-nums">{format(Number(value))}</span>
+        <span className="ml-auto pl-4 font-bold text-foreground tabular-nums">{format(Number(value))}</span>
       </div>
     )
   }
@@ -28,4 +28,4 @@ export function tooltipRow(config: ChartConfig, format: (v: number) => string) {
 }
 
 export const GRID_PROPS = { vertical: false, stroke: "var(--border)", strokeOpacity: 0.7 } as const
-export const AXIS_PROPS = { tickLine: false, axisLine: false, tickMargin: 10, fontSize: 14 } as const
+export const AXIS_PROPS = { tickLine: false, axisLine: false, tickMargin: 8, fontSize: 14 } as const

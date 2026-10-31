@@ -68,7 +68,7 @@ export function AuditView() {
         <KpiTile label="토큰 발급 · 폐기" value={fmtInt(tokens)} unit="건" hint="개인 및 프로젝트 액세스 토큰" icon={KeyRoundIcon} tone="rose" />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>유형별 이벤트</CardTitle>
@@ -107,7 +107,7 @@ export function AuditView() {
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {failed.slice(0, 6).map((e) => (
-              <div key={e.id} className="flex items-center gap-3 rounded-lg border border-rose-500/20 bg-rose-500/5 px-3 py-2">
+              <div key={e.id} className="flex items-center gap-4 rounded-lg border border-rose-500/20 bg-rose-500/5 px-4 py-2">
                 <CircleXIcon className="size-4 shrink-0 text-rose-600 dark:text-rose-300" />
                 <div className="min-w-0 flex-1 leading-tight">
                   <div className="truncate text-sm font-bold">
@@ -124,26 +124,26 @@ export function AuditView() {
         </Card>
       </div>
 
-      <div className="px-4 lg:px-6">
+      <div className="">
         <Card>
           <CardHeader>
             <CardTitle>감사 로그</CardTitle>
             <CardDescription>{rows.length}건 표시 · 최근 순</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
                 <TabsList className="h-auto flex-wrap">
                   <TabsTrigger value="all">
                     전체
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {auditEvents.length}
                     </Badge>
                   </TabsTrigger>
                   {auditTypeCounts.map((t) => (
                     <TabsTrigger key={t.type} value={t.type}>
                       {t.label}
-                      <Badge variant="secondary" className="px-1.5 tabular-nums">
+                      <Badge variant="secondary" className="px-2 tabular-nums">
                         {t.count}
                       </Badge>
                     </TabsTrigger>
@@ -186,7 +186,7 @@ export function AuditView() {
                           <UserCell name={e.actor.name} hue={e.actor.hue} secondary={`@${e.actor.username}`} size="sm" />
                         </TableCell>
                         <TableCell>
-                          <span className={cn("rounded px-1.5 py-px text-[0.7778rem] font-bold", TYPE_CLASS[e.type])}>{AUDIT_TYPE_LABELS[e.type]}</span>
+                          <span className={cn("rounded px-2 py-px text-[0.875rem] font-bold", TYPE_CLASS[e.type])}>{AUDIT_TYPE_LABELS[e.type]}</span>
                         </TableCell>
                         <TableCell className="font-medium whitespace-nowrap">{e.action}</TableCell>
                         <TableCell className="hidden max-w-72 truncate text-sm text-muted-foreground md:table-cell">{e.target}</TableCell>

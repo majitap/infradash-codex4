@@ -38,16 +38,16 @@ export function ActivityFeed({ items, className }: { items: ActivityItem[]; clas
       {items.map((item) => {
         const meta = META[item.type]
         return (
-          <li key={item.id} className="relative flex gap-3 py-2">
+          <li key={item.id} className="relative flex gap-4 py-2">
             <span className={cn("relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full ring-4 ring-card", meta.className)}>
               <meta.icon className="size-4" />
             </span>
             <div className="min-w-0 flex-1 leading-snug">
               <p className="text-sm font-medium">{item.text}</p>
-              <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground">
+              <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-2 text-xs text-muted-foreground">
                 {item.actor && (
-                  <span className="inline-flex items-center gap-1">
-                    <UserAvatar name={item.actor.name} hue={item.actor.hue} size="xs" className="size-4 text-[0.6667rem]" />
+                  <span className="inline-flex items-center gap-2">
+                    <UserAvatar name={item.actor.name} hue={item.actor.hue} size="xs" className="size-4 text-[0.8125rem]" />
                     {item.actor.name}
                   </span>
                 )}

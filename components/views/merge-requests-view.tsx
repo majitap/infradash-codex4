@@ -98,11 +98,11 @@ function MRRow({ mr }: { mr: MergeRequest }) {
         <div className="flex items-center gap-2">
           <span className="truncate font-medium">{mr.title}</span>
         </div>
-        <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-2 text-xs text-muted-foreground">
           <span className="font-mono">!{mr.iid}</span>
           <ProjectRef name={mr.project} showGroup={false} />
           {mr.labels.map((l) => (
-            <span key={l} className={`rounded px-1.5 py-px text-[0.7778rem] font-bold ${LABEL_CLASS[l]}`}>
+            <span key={l} className={`rounded px-2 py-px text-[0.875rem] font-bold ${LABEL_CLASS[l]}`}>
               {l}
             </span>
           ))}
@@ -112,7 +112,7 @@ function MRRow({ mr }: { mr: MergeRequest }) {
         <UserCell name={mr.author.name} hue={mr.author.hue} size="sm" />
       </TableCell>
       <TableCell className="hidden xl:table-cell">
-        <div className="flex -space-x-1.5">
+        <div className="flex -space-x-2">
           {mr.reviewers.map((r) => (
             <UserAvatar key={r.id} name={r.name} hue={r.hue} size="sm" className="ring-2 ring-card" />
           ))}
@@ -187,7 +187,7 @@ export function MergeRequestsView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @4xl/main:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4  @4xl/main:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>주간 처리량</CardTitle>
@@ -229,7 +229,7 @@ export function MergeRequestsView() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @6xl/main:grid-cols-3">
         <Card className="@6xl/main:col-span-2">
           <CardHeader>
             <CardTitle>열린 머지 리퀘스트</CardTitle>
@@ -241,7 +241,7 @@ export function MergeRequestsView() {
                 {FILTERS.map((f) => (
                   <TabsTrigger key={f.value} value={f.value}>
                     {f.label}
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {count(f.value)}
                     </Badge>
                   </TabsTrigger>
@@ -310,7 +310,7 @@ export function MergeRequestsView() {
             <CardContent className="flex flex-col gap-2">
               {staleMRs.slice(0, 5).map((mr) => (
                 <div key={mr.iid} className="flex items-center gap-2 text-sm">
-                  <span className="shrink-0 rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 tabular-nums dark:text-amber-300">
+                  <span className="shrink-0 rounded bg-amber-500/14 px-2 py-px text-[0.875rem] font-bold text-amber-800 tabular-nums dark:text-amber-300">
                     {Math.floor(mrAgeHours(mr) / 24)}일
                   </span>
                   <span className="min-w-0 flex-1 truncate">{mr.title}</span>
@@ -324,9 +324,9 @@ export function MergeRequestsView() {
               <CardTitle>라벨 분포</CardTitle>
               <CardDescription>열린 MR 기준</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-wrap gap-1.5">
+            <CardContent className="flex flex-wrap gap-2">
               {labelCounts.map((l) => (
-                <span key={l.label} className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold ${LABEL_CLASS[l.label]}`}>
+                <span key={l.label} className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold ${LABEL_CLASS[l.label]}`}>
                   {l.label}
                   <span className="tabular-nums opacity-80">{l.count}</span>
                 </span>

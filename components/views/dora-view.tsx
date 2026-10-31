@@ -9,32 +9,32 @@ import { doraTierLabel } from "@/lib/localization"
 
 export function DoraView() {
   return (
-    <div className="flex flex-col gap-6 px-6 pb-12 max-w-7xl mx-auto w-full">
+    <div className="legacy-page flex w-full flex-col gap-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-slate-900">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             배포 속도와 안정성
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-2">
             DORA 4대 핵심 지표로 살펴보는 소프트웨어 배포 성과
           </p>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 text-xs font-bold text-emerald-600">
+        <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-4 py-2 text-xs font-bold text-emerald-600">
           <AwardIcon className="size-4" />
           DORA 최상위 등급
         </span>
       </div>
 
       {/* 4 Core DORA Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="legacy-metrics grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {doraMetrics.map((item, idx) => (
           <div
             key={item.key}
-            className={`rounded-3xl p-5 shadow-xs flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5 ${
+            className={`rounded-3xl p-6 shadow-xs flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5 ${
               idx === 0
-                ? "bg-[#5551ff] text-white shadow-sm shadow-[#5551ff]/20"
+                ? "bg-[#6155ed] text-white shadow-sm shadow-[#6155ed]/20"
                 : "bg-white border border-slate-200/70"
             }`}
           >
@@ -42,7 +42,7 @@ export function DoraView() {
               <span className={`text-xs font-semibold ${idx === 0 ? "text-white/90" : "text-slate-500"}`}>
                 {item.title.split(" (")[0]}
               </span>
-              <span className={`rounded-full px-2 py-0.5 text-[0.6667rem] font-bold ${
+              <span className={`rounded-full px-2 py-2 text-[0.8125rem] font-bold ${
                 idx === 0 ? "bg-white/20 text-white" : "bg-emerald-50 text-emerald-600 border border-emerald-100"
               }`}>
                 {doraTierLabel(item.tier)}
@@ -51,7 +51,7 @@ export function DoraView() {
 
             <div>
               <div className="flex items-baseline gap-2">
-                <span className={`text-3xl font-black tracking-tight ${idx === 0 ? "text-white" : "text-slate-900"}`}>
+                <span className={`text-3xl font-bold tracking-tight ${idx === 0 ? "text-white" : "text-slate-900"}`}>
                   {item.value}
                 </span>
                 <span className={`text-xs font-medium ${idx === 0 ? "text-white/80" : "text-slate-400"}`}>
@@ -61,7 +61,7 @@ export function DoraView() {
                   {item.delta}
                 </span>
               </div>
-              <p className={`mt-1 text-xs leading-relaxed ${idx === 0 ? "text-white/80" : "text-slate-400"}`}>
+              <p className={`mt-2 text-xs leading-relaxed ${idx === 0 ? "text-white/80" : "text-slate-400"}`}>
                 {item.description}
               </p>
             </div>
@@ -73,7 +73,7 @@ export function DoraView() {
       <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs flex flex-col gap-4">
         <div>
           <h3 className="text-base font-bold text-slate-900">서비스별 DORA 지표 현황</h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-400 mt-2">
             주요 마이크로서비스 및 파이프라인별 엔지니어링 속도 비교
           </p>
         </div>
@@ -101,7 +101,7 @@ export function DoraView() {
                   <TableCell className="font-mono text-xs text-emerald-600 font-semibold">{svc.cfr}</TableCell>
                   <TableCell className="font-mono text-xs text-slate-700">{svc.mttr}</TableCell>
                   <TableCell className="text-right">
-                    <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-2.5 py-0.5 text-[0.7222rem] font-bold">
+                    <span className="rounded-full bg-[#6155ed]/10 text-[#6155ed] px-4 py-2 text-[0.875rem] font-bold">
                       {doraTierLabel(svc.tier)}
                     </span>
                   </TableCell>

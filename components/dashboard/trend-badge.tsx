@@ -20,7 +20,7 @@ export function TrendBadge({ trend, className, muted }: { trend: Trend; classNam
         ? "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300"
         : "bg-rose-500/12 text-rose-700 dark:text-rose-300"
   return (
-    <span className={cn("inline-flex shrink-0 items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs font-bold whitespace-nowrap tabular-nums", color, className)}>
+    <span className={cn("inline-flex shrink-0 items-center gap-2 rounded-full px-2 py-2 text-xs font-bold whitespace-nowrap tabular-nums", color, className)}>
       <Icon className="size-3.5" />
       {trend.label}
     </span>

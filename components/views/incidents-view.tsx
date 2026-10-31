@@ -95,7 +95,7 @@ export function IncidentsView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -104,18 +104,18 @@ export function IncidentsView() {
             </CardTitle>
             <CardDescription>{onCall.rotation}</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <div className="flex items-center gap-3 rounded-lg border bg-card/60 px-3 py-2.5">
+          <CardContent className="flex flex-col gap-4">
+            <div className="flex items-center gap-4 rounded-lg border bg-card/60 px-4 py-4">
               <UserAvatar name={onCall.primary.name} hue={onCall.primary.hue} size="lg" />
               <div className="min-w-0 flex-1 leading-tight">
                 <div className="text-xs font-bold text-tone-rose">1차 대응</div>
-                <div className="truncate font-extrabold">{onCall.primary.name}</div>
+                <div className="truncate font-bold">{onCall.primary.name}</div>
                 <div className="truncate text-xs text-muted-foreground">
                   {onCall.primary.department} · {onCall.primary.title}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-lg border bg-card/60 px-3 py-2.5">
+            <div className="flex items-center gap-4 rounded-lg border bg-card/60 px-4 py-4">
               <UserAvatar name={onCall.secondary.name} hue={onCall.secondary.hue} size="md" />
               <div className="min-w-0 flex-1 leading-tight">
                 <div className="text-xs font-bold text-muted-foreground">2차 대응</div>
@@ -128,9 +128,9 @@ export function IncidentsView() {
             <div className="grid grid-cols-4 gap-2">
               {severityCounts90d.map((s) => (
                 <div key={s.severity} className="rounded-lg border px-2 py-2 text-center leading-tight">
-                  <span className={cn("inline-block rounded px-1.5 text-[0.7778rem] font-extrabold", SEV_CLASS[s.severity])}>{s.severity}</span>
-                  <div className="mt-1 text-lg font-extrabold">{s.count}</div>
-                  <div className="text-[0.7222rem] text-muted-foreground">{SEVERITY_DESC[s.severity]}</div>
+                  <span className={cn("inline-block rounded px-2 text-[0.875rem] font-bold", SEV_CLASS[s.severity])}>{s.severity}</span>
+                  <div className="mt-2 text-lg font-bold">{s.count}</div>
+                  <div className="text-[0.875rem] text-muted-foreground">{SEVERITY_DESC[s.severity]}</div>
                 </div>
               ))}
             </div>
@@ -152,7 +152,7 @@ export function IncidentsView() {
               highlightLast
               className="h-52"
             />
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
               {monthlyIncidentStats.map((m) => (
                 <span key={m.month}>
                   {fmtMonth(m.month)} <b className="text-foreground">{m.count}건</b>
@@ -168,11 +168,11 @@ export function IncidentsView() {
             <CardDescription>최근 90일 · 목표 99.9%</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="flex flex-col gap-2.5">
+            <ul className="flex flex-col gap-4">
               {serviceUptime.map((s) => {
                 const st = uptimeStatus(s.uptime)
                 return (
-                  <li key={s.service} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1">
+                  <li key={s.service} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2">
                     <span className="truncate font-mono text-[13px] font-semibold">{s.service}</span>
                     <StatusPill status={st} label={fmtPct(s.uptime, 2)} icon={st === "good" ? CircleCheckIcon : TriangleAlertIcon} size="xs" className="w-20 justify-center" />
                     <div className="col-span-2 h-1.5 overflow-hidden rounded-full bg-muted">
@@ -185,12 +185,12 @@ export function IncidentsView() {
                 )
               })}
             </ul>
-            <p className="mt-3 text-[0.7778rem] text-muted-foreground">막대는 99.0% ~ 100% 구간을 확대해 표시합니다.</p>
+            <p className="mt-4 text-[0.875rem] text-muted-foreground">막대는 99.0% ~ 100% 구간을 확대해 표시합니다.</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="px-4 lg:px-6">
+      <div className="">
         <Card>
           <CardHeader>
             <CardTitle>인시던트 타임라인</CardTitle>
@@ -220,13 +220,13 @@ export function IncidentsView() {
                             <span className="font-mono text-xs text-muted-foreground">{i.id}</span>
                             <span className="truncate font-medium">{i.title}</span>
                           </div>
-                          <div className="mt-0.5 truncate text-xs text-muted-foreground">
+                          <div className="mt-2 truncate text-xs text-muted-foreground">
                             영향: {i.impact}
                             {i.rootCause && <> · 원인: {i.rootCause}</>}
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className={cn("inline-block rounded px-1.5 py-px text-[0.7778rem] font-extrabold", SEV_CLASS[i.severity])} title={SEVERITY_DESC[i.severity]}>
+                          <span className={cn("inline-block rounded px-2 py-px text-[0.875rem] font-bold", SEV_CLASS[i.severity])} title={SEVERITY_DESC[i.severity]}>
                             {i.severity}
                           </span>
                         </TableCell>

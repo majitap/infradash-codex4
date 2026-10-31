@@ -38,7 +38,7 @@ export function DonutChart({
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent nameKey="name" hideLabel formatter={(value, name) => (
-                <div className="flex flex-1 items-center justify-between gap-3">
+                <div className="flex flex-1 items-center justify-between gap-4">
                   <span className="text-muted-foreground">{config[String(name)]?.label ?? name}</span>
                   <span className="font-bold tabular-nums">{formatValue(Number(value))}</span>
                 </div>
@@ -49,13 +49,13 @@ export function DonutChart({
         </ChartContainer>
         {(centerLabel || centerValue) && (
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center leading-tight">
-            {centerValue && <span className="text-2xl font-extrabold tracking-tight">{centerValue}</span>}
+            {centerValue && <span className="text-2xl font-bold tracking-tight">{centerValue}</span>}
             {centerLabel && <span className="text-xs text-muted-foreground">{centerLabel}</span>}
           </div>
         )}
       </div>
       {legend !== "none" && (
-        <ul className={cn("grid min-w-0 flex-1 gap-1.5 text-sm", legend === "bottom" && "w-full grid-cols-1 @md:grid-cols-2")}>
+        <ul className={cn("grid min-w-0 flex-1 gap-2 text-sm", legend === "bottom" && "w-full grid-cols-1 @md:grid-cols-2")}>
           {data.map((d) => (
             <li key={d.key} className="flex items-center gap-2">
               <span className="size-2.5 shrink-0 rounded-[3px]" style={{ background: d.color }} />

@@ -109,12 +109,12 @@ const PAGE_SIZE = 12
 function RoleChip({ role }: { role: UserRole | "Admin" | null }) {
   if (!role) return <span className="text-xs text-muted-foreground">없음</span>
   if (role === "Admin")
-    return <span className="rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
-  return <span className={cn("rounded px-1.5 py-px text-[0.7778rem] font-bold", ROLE_CHIP[role])}>{role}</span>
+    return <span className="rounded bg-amber-500/14 px-2 py-px text-[0.875rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
+  return <span className={cn("rounded px-2 py-px text-[0.875rem] font-bold", ROLE_CHIP[role])}>{role}</span>
 }
 
 function GroupChip({ group }: { group: AccessGroup }) {
-  return <span className="rounded bg-muted px-1.5 py-px font-mono text-[0.7778rem] font-semibold">{group}</span>
+  return <span className="rounded bg-muted px-2 py-px font-mono text-[0.875rem] font-semibold">{group}</span>
 }
 
 function requestSummary(r: AccessRequest) {
@@ -150,7 +150,7 @@ function RoleSelect({
             v === "none" ? (
               <span className="text-muted-foreground/70">—</span>
             ) : (
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-2">
                 <span className={cn("size-2 shrink-0 rounded-full", ROLE_DOT[v as UserRole])} />
                 {v}
               </span>
@@ -409,7 +409,7 @@ export function AccessView() {
   return (
     <>
       <Section>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border bg-card px-4 py-2.5 text-sm">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border bg-card px-4 py-4 text-sm">
           <LockKeyholeIcon className="size-4 text-tone-orange" />
           <span className="font-bold">관리자 전용</span>
           <span className="text-muted-foreground">
@@ -458,7 +458,7 @@ export function AccessView() {
       </KpiGrid>
 
       {/* requests + policies + admins */}
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @6xl/main:grid-cols-3">
         <Card className="@6xl/main:col-span-2">
           <CardHeader>
             <CardTitle>접근 요청</CardTitle>
@@ -470,7 +470,7 @@ export function AccessView() {
                 <TabsList>
                   <TabsTrigger value="pending">
                     대기
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {pending.length}
                     </Badge>
                   </TabsTrigger>
@@ -492,18 +492,18 @@ export function AccessView() {
                     const approvals = approvalsOf(r)
                     const need = required(r)
                     return (
-                      <li key={r.id} className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-start">
+                      <li key={r.id} className="flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-start">
                         <UserAvatar name={r.user.name} hue={r.user.hue} size="md" className="hidden sm:flex" />
                         <div className="min-w-0 flex-1">
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
                             <span className="font-bold">{r.user.name}</span>
                             <span className="text-xs text-muted-foreground">
                               @{r.user.username} · {r.user.department}
                             </span>
                             {r.user.status === "pending" && <StatusPill status="warning" label="초대 대기 계정" size="xs" />}
                           </div>
-                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-sm">
-                            <span className="rounded bg-tone-orange/12 px-1.5 py-px text-[0.7778rem] font-bold text-tone-orange">
+                          <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+                            <span className="rounded bg-tone-orange/12 px-2 py-px text-[0.875rem] font-bold text-tone-orange">
                               {REQUEST_KIND_LABELS[r.kind]}
                             </span>
                             {r.group ? <GroupChip group={r.group} /> : <span className="text-xs text-muted-foreground">인스턴스 전체</span>}
@@ -511,7 +511,7 @@ export function AccessView() {
                             <ChevronRightIcon className="size-3.5 text-muted-foreground" />
                             <RoleChip role={r.requestedRole} />
                             {r.durationDays ? (
-                              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                              <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
                                 <ClockIcon className="size-3.5" />
                                 {r.durationDays}일
                               </span>
@@ -520,8 +520,8 @@ export function AccessView() {
                             )}
                             {r.highPrivilege && <StatusPill status="serious" label="높은 권한" icon={TriangleAlertIcon} size="xs" />}
                           </div>
-                          <p className="mt-1.5 text-sm text-muted-foreground">{r.reason}</p>
-                          <div className="mt-1 flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
+                          <p className="mt-2 text-sm text-muted-foreground">{r.reason}</p>
+                          <div className="mt-2 flex flex-wrap items-center gap-x-4 text-xs text-muted-foreground">
                             <span>
                               {r.id} · {relativeTime(r.requestedAt)} 요청
                             </span>
@@ -534,7 +534,7 @@ export function AccessView() {
                             )}
                           </div>
                         </div>
-                        <div className="flex shrink-0 gap-1.5 sm:pt-1">
+                        <div className="flex shrink-0 gap-2 sm:pt-2">
                           <Button variant="outline" size="sm" onClick={() => setConfirm({ kind: "deny", request: r })}>
                             <UserXIcon />
                             거절
@@ -590,7 +590,7 @@ export function AccessView() {
             <CardContent>
               <ul className="flex flex-col divide-y">
                 {adminUsers.map((u) => (
-                  <li key={u.id} className="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
+                  <li key={u.id} className="flex items-center gap-4 py-2 first:pt-0 last:pb-0">
                     <UserCell name={u.name} hue={u.hue} secondary={`${u.department} · ${u.lastActivity ? relativeTime(u.lastActivity) : "접속 기록 없음"}`} size="sm" />
                     <span className="ml-auto" title={u.twoFactor ? "2FA 사용" : "2FA 미사용"}>
                       {u.twoFactor ? (
@@ -621,7 +621,7 @@ export function AccessView() {
             </CardHeader>
             <CardContent className="flex flex-col divide-y">
               {accessPolicies.map((p) => (
-                <label key={p.id} htmlFor={`policy-${p.id}`} className="flex cursor-pointer items-start gap-3 py-2.5 first:pt-0 last:pb-0">
+                <label key={p.id} htmlFor={`policy-${p.id}`} className="flex cursor-pointer items-start gap-4 py-4 first:pt-0 last:pb-0">
                   <div className="min-w-0 flex-1 leading-snug">
                     <div className="text-sm font-bold">{p.label}</div>
                     <div className="text-xs text-muted-foreground">{p.description}</div>
@@ -630,7 +630,7 @@ export function AccessView() {
                     id={`policy-${p.id}`}
                     checked={policies[p.id]}
                     onCheckedChange={(v) => togglePolicy(p.id, p.label, v)}
-                    className="mt-0.5"
+                    className="mt-2"
                   />
                 </label>
               ))}
@@ -649,7 +649,7 @@ export function AccessView() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Tabs
                 value={editorView}
                 onValueChange={(v) => {
@@ -660,13 +660,13 @@ export function AccessView() {
                 <TabsList className="h-auto flex-wrap">
                   <TabsTrigger value="all">
                     전체
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {accessUsers.length}
                     </Badge>
                   </TabsTrigger>
                   <TabsTrigger value="changed">
                     변경됨
-                    <Badge variant="secondary" className={cn("px-1.5 tabular-nums", changedUserIds.size > 0 && "bg-amber-500/20 text-amber-800 dark:text-amber-300")}>
+                    <Badge variant="secondary" className={cn("px-2 tabular-nums", changedUserIds.size > 0 && "bg-amber-500/20 text-amber-800 dark:text-amber-300")}>
                       {changedUserIds.size}
                     </Badge>
                   </TabsTrigger>
@@ -697,7 +697,7 @@ export function AccessView() {
                     {ACCESS_GROUPS.map((g) => (
                       <TableHead key={g} className="min-w-44">
                         <div className="font-mono text-xs font-bold text-foreground">{g}</div>
-                        <div className="text-[0.7778rem] font-normal text-muted-foreground">{groupMemberCount(g)}명</div>
+                        <div className="text-[0.875rem] font-normal text-muted-foreground">{groupMemberCount(g)}명</div>
                       </TableHead>
                     ))}
                     <TableHead className="text-center">관리자</TableHead>
@@ -727,7 +727,7 @@ export function AccessView() {
                           const days = base?.expiresAt ? daysBetween(MOCK_TODAY, base.expiresAt) : null
                           return (
                             <TableCell key={g}>
-                              <div className="flex items-center gap-1">
+                              <div className="flex items-center gap-2">
                                 <RoleSelect
                                   value={cell?.role ?? null}
                                   changed={key in draft}
@@ -737,7 +737,7 @@ export function AccessView() {
                                 {days !== null && (
                                   <span
                                     title={`임시 권한 · ${fmtDate(base!.expiresAt!)} 만료`}
-                                    className={cn("inline-flex items-center gap-0.5 text-[0.7778rem] tabular-nums", days <= 7 ? "font-bold text-amber-700 dark:text-amber-300" : "text-muted-foreground")}
+                                    className={cn("inline-flex items-center gap-2 text-[0.875rem] tabular-nums", days <= 7 ? "font-bold text-amber-700 dark:text-amber-300" : "text-muted-foreground")}
                                   >
                                     <ClockIcon className="size-3" />
                                     {days}일
@@ -749,7 +749,7 @@ export function AccessView() {
                         })}
                         <TableCell className="text-center">
                           {admins.includes(u.id) ? (
-                            <span className="rounded bg-amber-500/14 px-1.5 py-px text-[0.7778rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
+                            <span className="rounded bg-amber-500/14 px-2 py-px text-[0.875rem] font-bold text-amber-800 dark:text-amber-300">관리자</span>
                           ) : (
                             <MinusIcon className="mx-auto size-3.5 text-muted-foreground/50" />
                           )}
@@ -765,7 +765,7 @@ export function AccessView() {
               <span className="tabular-nums">
                 {editorRows.length === 0 ? 0 : safePage * PAGE_SIZE + 1}–{Math.min(editorRows.length, (safePage + 1) * PAGE_SIZE)} / {editorRows.length}명
               </span>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 <Button variant="outline" size="icon-sm" aria-label="이전 페이지" disabled={safePage === 0} onClick={() => setPage(safePage - 1)}>
                   <ChevronLeftIcon />
                 </Button>
@@ -779,13 +779,13 @@ export function AccessView() {
             </div>
 
             {draftEntries.length > 0 && (
-              <div className="sticky bottom-3 z-10 flex flex-wrap items-center gap-3 rounded-lg border border-amber-500/40 bg-card px-4 py-3 shadow-md">
+              <div className="sticky bottom-3 z-10 flex flex-wrap items-center gap-4 rounded-lg border border-amber-500/40 bg-card px-4 py-4 shadow-md">
                 <TriangleAlertIcon className="size-4 text-amber-600 dark:text-amber-300" />
                 <span className="text-sm">
                   <b>{draftEntries.length}건</b>의 변경이 적용되지 않았습니다
                   <span className="text-muted-foreground"> · 사용자 {changedUserIds.size}명</span>
                 </span>
-                <div className="ml-auto flex gap-1.5">
+                <div className="ml-auto flex gap-2">
                   <Button variant="outline" size="sm" onClick={() => setDraft({})}>
                     <Undo2Icon />
                     되돌리기
@@ -802,7 +802,7 @@ export function AccessView() {
       </Section>
 
       {/* review lists */}
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>만료 예정 임시 권한</CardTitle>
@@ -816,18 +816,18 @@ export function AccessView() {
                 {expiring.map(({ key, user, group, cell }) => {
                   const days = daysBetween(MOCK_TODAY, cell.expiresAt!)
                   return (
-                    <li key={key} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5 first:pt-0 last:pb-0">
+                    <li key={key} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-4 first:pt-0 last:pb-0">
                       <UserAvatar name={user.name} hue={user.hue} size="sm" />
                       <div className="min-w-0 flex-1 leading-tight">
-                        <div className="flex flex-wrap items-center gap-1.5">
+                        <div className="flex flex-wrap items-center gap-2">
                           <span className="font-bold">{user.name}</span>
                           <GroupChip group={group} />
                           <RoleChip role={cell.role} />
                         </div>
-                        <div className="mt-1 text-xs text-muted-foreground">
+                        <div className="mt-2 text-xs text-muted-foreground">
                           <span
                             className={cn(
-                              "mr-1.5 rounded-full px-1.5 py-px font-bold tabular-nums",
+                              "mr-2 rounded-full px-2 py-px font-bold tabular-nums",
                               days <= 3 ? "bg-rose-500/12 text-rose-700 dark:text-rose-300" : "bg-amber-500/14 text-amber-800 dark:text-amber-300"
                             )}
                           >
@@ -836,7 +836,7 @@ export function AccessView() {
                           {fmtDate(cell.expiresAt!)} 만료 · {user.department}
                         </div>
                       </div>
-                      <div className="flex shrink-0 gap-1.5">
+                      <div className="flex shrink-0 gap-2">
                         <Button variant="outline" size="xs" onClick={() => extend(key, user, group)}>
                           30일 연장
                         </Button>
@@ -866,19 +866,19 @@ export function AccessView() {
                   const key = membershipKey(user.id, membership.group)
                   const role = cells[key]?.role ?? membership.role
                   return (
-                    <li key={key} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5 first:pt-0 last:pb-0">
+                    <li key={key} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-4 first:pt-0 last:pb-0">
                       <UserAvatar name={user.name} hue={user.hue} size="sm" />
                       <div className="min-w-0 flex-1 leading-tight">
-                        <div className="flex flex-wrap items-center gap-1.5">
+                        <div className="flex flex-wrap items-center gap-2">
                           <span className="font-bold">{user.name}</span>
                           <GroupChip group={membership.group} />
                           <RoleChip role={role} />
                         </div>
-                        <div className="mt-1">
+                        <div className="mt-2">
                           <StatusPill status={user.status === "blocked" ? "critical" : "warning"} label={reason} icon={ShieldAlertIcon} size="xs" />
                         </div>
                       </div>
-                      <div className="flex shrink-0 gap-1.5">
+                      <div className="flex shrink-0 gap-2">
                         <Button variant="outline" size="xs" onClick={() => demote(key, user, membership.group, role)}>
                           Developer로 하향
                         </Button>
@@ -896,7 +896,7 @@ export function AccessView() {
       </div>
 
       {/* reference + history */}
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @6xl/main:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4  @6xl/main:grid-cols-5">
         <Card className="@6xl/main:col-span-3">
           <CardHeader>
             <CardTitle>역할별 권한</CardTitle>
@@ -910,7 +910,7 @@ export function AccessView() {
                     <TableHead className="min-w-40">권한</TableHead>
                     {ROLE_ORDER.map((r) => (
                       <TableHead key={r} className="text-center" title={ROLE_DESCRIPTIONS[r]}>
-                        <span className="inline-flex items-center gap-1.5">
+                        <span className="inline-flex items-center gap-2">
                           <span className={cn("size-2 rounded-full", ROLE_DOT[r])} />
                           {r}
                         </span>
@@ -925,7 +925,7 @@ export function AccessView() {
                       <React.Fragment key={p.key}>
                         {newCategory && (
                           <TableRow className="bg-muted/30 hover:bg-muted/30">
-                            <TableCell colSpan={ROLE_ORDER.length + 1} className="py-1.5 text-xs font-bold text-muted-foreground">
+                            <TableCell colSpan={ROLE_ORDER.length + 1} className="py-2 text-xs font-bold text-muted-foreground">
                               {p.category}
                             </TableCell>
                           </TableRow>
@@ -962,7 +962,7 @@ export function AccessView() {
           <CardContent>
             <ol className="flex flex-col divide-y">
               {history.slice(0, 12).map((h) => (
-                <li key={h.id} className="flex gap-3 py-2.5 first:pt-0 last:pb-0">
+                <li key={h.id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
                   <UserAvatar name={h.actorName} hue={h.actorHue} size="sm" />
                   <div className="min-w-0 flex-1 leading-snug">
                     <div className="text-sm">
@@ -1022,7 +1022,7 @@ function HandledRow({
   note?: string
 }) {
   return (
-    <li className="flex items-start gap-3 px-4 py-2.5">
+    <li className="flex items-start gap-4 px-4 py-4">
       <UserAvatar name={user.name} hue={user.hue} size="sm" />
       <div className="min-w-0 flex-1 leading-snug">
         <div className="flex flex-wrap items-center gap-x-2">
@@ -1145,7 +1145,7 @@ function ConfirmDialog({
         {c?.kind === "apply" && (
           <ul className="thin-scrollbar flex max-h-64 flex-col divide-y overflow-y-auto rounded-lg border text-sm">
             {draftEntries.map((e) => (
-              <li key={e.key} className="flex items-center gap-2 px-3 py-2">
+              <li key={e.key} className="flex items-center gap-2 px-4 py-2">
                 <span className="min-w-0 flex-1 truncate font-bold">{e.user.name}</span>
                 <GroupChip group={e.group} />
                 <RoleChip role={e.from} />

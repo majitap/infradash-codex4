@@ -111,7 +111,7 @@ export function PipelinesView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card className="@5xl/main:col-span-2">
           <CardHeader>
             <CardTitle>일별 파이프라인</CardTitle>
@@ -144,7 +144,7 @@ export function PipelinesView() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>소요 시간 추이</CardTitle>
@@ -211,7 +211,7 @@ export function PipelinesView() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card className="@5xl/main:col-span-2">
           <CardHeader>
             <CardTitle>최근 파이프라인</CardTitle>
@@ -239,10 +239,10 @@ export function PipelinesView() {
                             <span className="font-mono text-xs text-muted-foreground">#{p.id}</span>
                             <ProjectRef name={p.project} showGroup={false} />
                           </div>
-                          <div className="mt-0.5 inline-flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                          <div className="mt-2 inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
                             <GitBranchIcon className="size-3" />
                             {p.ref}
-                            {p.failedStage && <span className="ml-1 rounded bg-rose-500/12 px-1 text-[0.7778rem] font-bold text-rose-700 dark:text-rose-300">{p.failedStage}</span>}
+                            {p.failedStage && <span className="ml-2 rounded bg-rose-500/12 px-2 text-[0.875rem] font-bold text-rose-700 dark:text-rose-300">{p.failedStage}</span>}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -251,7 +251,7 @@ export function PipelinesView() {
                         <TableCell className="hidden md:table-cell">
                           <div className="flex items-center gap-2">
                             <UserCell name={p.triggeredBy.name} hue={p.triggeredBy.hue} size="xs" />
-                            <span className="rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold text-muted-foreground">{SOURCE_LABEL[p.source]}</span>
+                            <span className="rounded bg-muted px-2 py-px text-[0.875rem] font-bold text-muted-foreground">{SOURCE_LABEL[p.source]}</span>
                           </div>
                         </TableCell>
                         <TableCell className="hidden text-right tabular-nums lg:table-cell">
@@ -274,7 +274,7 @@ export function PipelinesView() {
           <CardContent>
             <ul className="flex flex-col divide-y">
               {slowestJobs.map((j) => (
-                <li key={`${j.project}-${j.job}`} className="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
+                <li key={`${j.project}-${j.job}`} className="flex items-center gap-4 py-2 first:pt-0 last:pb-0">
                   <div className="min-w-0 flex-1 leading-tight">
                     <div className="truncate font-mono text-[13px] font-semibold">{j.job}</div>
                     <div className="truncate text-xs text-muted-foreground">

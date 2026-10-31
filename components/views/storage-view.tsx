@@ -79,15 +79,15 @@ export function StorageView() {
         />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>유형별 사용량</CardTitle>
             <CardDescription>전체 프로젝트 합계</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-5">
+          <CardContent className="flex flex-col gap-6">
             <div>
-              <div className="mb-1.5 flex justify-between text-xs text-muted-foreground">
+              <div className="mb-2 flex justify-between text-xs text-muted-foreground">
                 <span>할당량 사용</span>
                 <span className="tabular-nums">
                   {fmtSize(storageTotalMb)} / {fmtSize(storageQuotaMb)}
@@ -129,18 +129,18 @@ export function StorageView() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card className="@5xl/main:col-span-2">
           <CardHeader>
             <CardTitle>프로젝트별 사용량</CardTitle>
             <CardDescription>상위 10개 · 막대 색상은 위 차트와 같은 유형 구분</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-4">
               {topStorageProjects.map((p) => (
-                <li key={p.project} className="grid grid-cols-[minmax(0,12rem)_1fr_auto] items-center gap-3">
+                <li key={p.project} className="grid grid-cols-[minmax(0,12rem)_1fr_auto] items-center gap-4">
                   <div className="min-w-0 leading-tight">
-                    <div className="flex items-center gap-1.5 font-mono text-[13px] font-semibold">
+                    <div className="flex items-center gap-2 font-mono text-[13px] font-semibold">
                       <span className="truncate">{p.project}</span>
                       {p.archived && <ArchiveIcon className="size-3 shrink-0 text-muted-foreground" />}
                     </div>
@@ -151,9 +151,9 @@ export function StorageView() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
               {STORAGE_KINDS.map((k) => (
-                <span key={k.key} className="inline-flex items-center gap-1.5">
+                <span key={k.key} className="inline-flex items-center gap-2">
                   <span className="size-2.5 rounded-[3px]" style={{ background: KIND_COLOR[k.key] }} />
                   {k.label}
                 </span>
@@ -168,7 +168,7 @@ export function StorageView() {
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {cleanupCandidates.map((c) => (
-              <div key={c.label} className="flex items-center gap-3 rounded-lg border px-3 py-2.5">
+              <div key={c.label} className="flex items-center gap-4 rounded-lg border px-4 py-4">
                 <span className="size-2.5 shrink-0 rounded-[3px]" style={{ background: KIND_COLOR[c.kind] }} />
                 <div className="min-w-0 flex-1 leading-tight">
                   <div className="truncate text-sm font-bold">{c.label}</div>

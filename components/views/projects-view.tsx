@@ -112,7 +112,7 @@ export function ProjectsView() {
         <KpiTile label="열린 이슈" value={fmtInt(openIssues)} unit="건" hint={`프로젝트당 평균 ${(openIssues / activeProjects.length).toFixed(1)}건`} icon={CircleDotIcon} tone="sky" />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>언어 분포</CardTitle>
@@ -143,7 +143,7 @@ export function ProjectsView() {
           <CardContent>
             <ul className="flex flex-col divide-y">
               {mostActive.map((p) => (
-                <li key={p.id} className="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
+                <li key={p.id} className="flex items-center gap-4 py-2 first:pt-0 last:pb-0">
                   <span className="size-2.5 shrink-0 rounded-full" style={{ background: LANGUAGE_COLORS[p.language] }} />
                   <div className="min-w-0 flex-1 leading-tight">
                     <div className="truncate font-mono text-[13px] font-semibold">{p.name}</div>
@@ -158,20 +158,20 @@ export function ProjectsView() {
         </Card>
       </div>
 
-      <div className="px-4 lg:px-6">
+      <div className="">
         <Card>
           <CardHeader>
             <CardTitle>프로젝트</CardTitle>
             <CardDescription>{rows.length}개 표시 · 30일 커밋 순</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
                 <TabsList className="h-auto flex-wrap">
                   {FILTERS.map((f) => (
                     <TabsTrigger key={f.value} value={f.value}>
                       {f.label}
-                      <Badge variant="secondary" className="px-1.5 tabular-nums">
+                      <Badge variant="secondary" className="px-2 tabular-nums">
                         {projects.filter((p) => matches(p, f.value)).length}
                       </Badge>
                     </TabsTrigger>
@@ -219,25 +219,25 @@ export function ProjectsView() {
                                 <span className="font-semibold">{p.name}</span>
                               </span>
                               {p.archived && (
-                                <span className="inline-flex items-center gap-1 rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold text-muted-foreground">
+                                <span className="inline-flex items-center gap-2 rounded bg-muted px-2 py-px text-[0.875rem] font-bold text-muted-foreground">
                                   <ArchiveIcon className="size-3" />
                                   아카이브
                                 </span>
                               )}
                               {p.visibility === "public" && (
-                                <span className="inline-flex items-center gap-0.5 text-[0.7778rem] text-amber-600 dark:text-amber-300">
+                                <span className="inline-flex items-center gap-2 text-[0.875rem] text-amber-600 dark:text-amber-300">
                                   <StarIcon className="size-3 fill-current" />
                                   {p.stars}
                                 </span>
                               )}
                             </div>
-                            <div className="mt-0.5 truncate text-xs text-muted-foreground">{p.description}</div>
+                            <div className="mt-2 truncate text-xs text-muted-foreground">{p.description}</div>
                           </TableCell>
                           <TableCell>
                             <LanguageDot language={p.language} />
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
-                            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                            <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
                               <vis.icon className="size-3.5" />
                               {vis.label}
                             </span>
@@ -254,7 +254,7 @@ export function ProjectsView() {
                           </TableCell>
                           <TableCell className="hidden text-right text-sm tabular-nums xl:table-cell">{fmtSize(totalStorage(p))}</TableCell>
                           <TableCell className="hidden 2xl:table-cell">
-                            <div className="flex -space-x-1.5">
+                            <div className="flex -space-x-2">
                               {p.maintainerIds.map((id) => {
                                 const u = userById(id)
                                 return <UserAvatar key={id} name={u.name} hue={u.hue} size="xs" className="ring-2 ring-card" />

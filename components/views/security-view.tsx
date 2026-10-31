@@ -95,7 +95,7 @@ export function SecurityView() {
         <KpiTile label="평균 해결 기간" value={mttrDays.toFixed(1)} unit="일" hint={`컴플라이언스 ${passed}/${complianceChecks.length} 통과`} icon={TimerIcon} tone="sky" />
       </KpiGrid>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @5xl/main:grid-cols-3">
         <Card className="@5xl/main:col-span-2">
           <CardHeader>
             <CardTitle>심각도별 추이</CardTitle>
@@ -130,7 +130,7 @@ export function SecurityView() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @6xl/main:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4  @6xl/main:grid-cols-3">
         <Card className="@6xl/main:col-span-2">
           <CardHeader>
             <CardTitle>취약점</CardTitle>
@@ -141,7 +141,7 @@ export function SecurityView() {
               <TabsList className="h-auto flex-wrap">
                 <TabsTrigger value="all">
                   전체
-                  <Badge variant="secondary" className="px-1.5 tabular-nums">
+                  <Badge variant="secondary" className="px-2 tabular-nums">
                     {vulnerabilities.length}
                   </Badge>
                 </TabsTrigger>
@@ -149,7 +149,7 @@ export function SecurityView() {
                   <TabsTrigger key={s} value={s}>
                     <span className="size-2 rounded-full" style={{ background: SEVERITY_COLOR[s] }} />
                     {SEVERITY_LABELS[s]}
-                    <Badge variant="secondary" className="px-1.5 tabular-nums">
+                    <Badge variant="secondary" className="px-2 tabular-nums">
                       {vulnerabilities.filter((v) => v.severity === s).length}
                     </Badge>
                   </TabsTrigger>
@@ -177,15 +177,15 @@ export function SecurityView() {
                           <div className="flex items-center gap-2">
                             <span className="truncate font-medium">{v.title}</span>
                             {v.fixAvailable && (
-                              <span className="inline-flex shrink-0 items-center gap-0.5 rounded bg-emerald-500/12 px-1.5 py-px text-[0.7778rem] font-bold text-emerald-700 dark:text-emerald-300">
+                              <span className="inline-flex shrink-0 items-center gap-2 rounded bg-emerald-500/12 px-2 py-px text-[0.875rem] font-bold text-emerald-700 dark:text-emerald-300">
                                 <WrenchIcon className="size-3" />
                                 패치
                               </span>
                             )}
                           </div>
-                          <div className="mt-0.5 flex flex-wrap items-center gap-x-2 font-mono text-xs text-muted-foreground">
+                          <div className="mt-2 flex flex-wrap items-center gap-x-2 font-mono text-xs text-muted-foreground">
                             <span>{v.id}</span>
-                            {v.cve && <span className="rounded bg-muted px-1">{v.cve}</span>}
+                            {v.cve && <span className="rounded bg-muted px-2">{v.cve}</span>}
                             <span className="truncate">{v.location}</span>
                           </div>
                         </TableCell>
@@ -193,7 +193,7 @@ export function SecurityView() {
                           <StatusPill status={SEVERITY_STATUS[v.severity]} label={SEVERITY_LABELS[v.severity]} size="xs" />
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          <span className="rounded bg-muted px-1.5 py-px text-[0.7778rem] font-bold">{v.scanner}</span>
+                          <span className="rounded bg-muted px-2 py-px text-[0.875rem] font-bold">{v.scanner}</span>
                         </TableCell>
                         <TableCell className="hidden lg:table-cell">
                           <ProjectRef name={v.project} showGroup={false} />
@@ -219,13 +219,13 @@ export function SecurityView() {
                 {passed} / {complianceChecks.length} 항목 통과
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col gap-1.5">
+            <CardContent className="flex flex-col gap-2">
               {complianceChecks.map((c) => (
-                <div key={c.id} className="flex items-start gap-2.5 rounded-lg px-2 py-1.5 hover:bg-muted/50">
+                <div key={c.id} className="flex items-start gap-4 rounded-lg px-2 py-2 hover:bg-muted/50">
                   {c.passed ? (
-                    <ShieldCheckIcon className="mt-0.5 size-4 shrink-0 text-emerald-600 dark:text-emerald-300" />
+                    <ShieldCheckIcon className="mt-2 size-4 shrink-0 text-emerald-600 dark:text-emerald-300" />
                   ) : (
-                    <CircleXIcon className="mt-0.5 size-4 shrink-0 text-rose-600 dark:text-rose-300" />
+                    <CircleXIcon className="mt-2 size-4 shrink-0 text-rose-600 dark:text-rose-300" />
                   )}
                   <div className="min-w-0 leading-tight">
                     <div className={cn("text-sm font-bold", !c.passed && "text-rose-700 dark:text-rose-300")}>{c.label}</div>
@@ -254,8 +254,8 @@ export function SecurityView() {
             </CardContent>
           </Card>
           <Card size="sm" className="border-rose-500/30 bg-rose-500/5">
-            <CardContent className="flex items-start gap-3 text-sm">
-              <KeyRoundIcon className="mt-0.5 size-4 shrink-0 text-rose-600 dark:text-rose-300" />
+            <CardContent className="flex items-start gap-4 text-sm">
+              <KeyRoundIcon className="mt-2 size-4 shrink-0 text-rose-600 dark:text-rose-300" />
               <div>
                 <div className="font-bold">시크릿 노출 {secretLeaks30d}건이 아직 폐기되지 않았습니다</div>
                 <div className="text-xs text-muted-foreground">etl-pipelines의 AWS 액세스 키를 즉시 교체하고 히스토리에서 제거하세요.</div>

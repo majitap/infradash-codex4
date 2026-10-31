@@ -53,7 +53,7 @@ export function NavMain() {
                     <SidebarMenuButton
                       tooltip={item.title}
                       isActive={active}
-                      className="h-9 gap-2.5 font-medium data-[active=true]:font-bold"
+                      className="h-9 gap-4 font-medium data-[active=true]:font-bold"
                       render={<Link href={item.url} onClick={() => setOpenMobile(false)} />}
                     >
                       <span
@@ -69,7 +69,7 @@ export function NavMain() {
                     {badge && badge.value > 0 && (
                       <SidebarMenuBadge
                         className={cn(
-                          "rounded-full px-1.5 text-[0.7778rem] font-bold tabular-nums",
+                          "rounded-full px-2 text-[0.875rem] font-bold tabular-nums",
                           badge.alert ? "bg-tone-rose/15 text-tone-rose" : "bg-sidebar-accent text-sidebar-foreground/80"
                         )}
                       >

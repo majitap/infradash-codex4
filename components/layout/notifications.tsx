@@ -43,9 +43,9 @@ export function Notifications() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {notifications.map((n) => (
-            <DropdownMenuItem key={n.id} className="items-start gap-3 py-2">
-              <span className={`mt-1.5 size-2 shrink-0 rounded-full ${STATUS[n.tone].dot}`} />
-              <div className="grid min-w-0 flex-1 gap-0.5">
+            <DropdownMenuItem key={n.id} className="items-start gap-4 py-2">
+              <span className={`mt-2 size-2 shrink-0 rounded-full ${STATUS[n.tone].dot}`} />
+              <div className="grid min-w-0 flex-1 gap-2">
                 <span className="truncate font-medium">{n.title}</span>
                 <span className="truncate text-xs text-muted-foreground">{n.body}</span>
                 <span className="text-xs text-muted-foreground/80">{relativeTime(n.at)}</span>

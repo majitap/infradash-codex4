@@ -14,8 +14,8 @@ function PodiumCard({ row, rank, periodLabel }: { row: LeaderboardRow; rank: num
   return (
     <Card
       className={cn(
-        "relative items-center gap-3 px-4 text-center",
-        first ? "py-6 ring-2 ring-amber-400/70 @3xl/main:order-2" : "py-5 @3xl/main:order-1",
+        "relative items-center gap-4 px-4 text-center",
+        first ? "py-6 ring-2 ring-amber-400/70 @3xl/main:order-2" : "py-6 @3xl/main:order-1",
         rank === 3 && "@3xl/main:order-3"
       )}
     >
@@ -25,14 +25,14 @@ function PodiumCard({ row, rank, periodLabel }: { row: LeaderboardRow; rank: num
         {first && <CrownIcon className="absolute -top-3 left-1/2 size-6 -translate-x-1/2 -rotate-12 fill-amber-400 text-amber-500" />}
       </div>
       <div className="leading-tight">
-        <div className={cn("font-extrabold", first ? "text-lg" : "text-base")}>{row.user.name}</div>
+        <div className={cn("font-bold", first ? "text-lg" : "text-base")}>{row.user.name}</div>
         <div className="text-xs text-muted-foreground">
           {row.user.department} · {row.user.title}
         </div>
       </div>
-      <div className="flex items-baseline gap-1">
+      <div className="flex items-baseline gap-2">
         <GitCommitHorizontalIcon className="size-4 self-center text-tone-violet" />
-        <span className={cn("font-extrabold tracking-tight", first ? "text-4xl" : "text-3xl")}>{fmtInt(row.commits)}</span>
+        <span className={cn("font-bold tracking-tight", first ? "text-4xl" : "text-3xl")}>{fmtInt(row.commits)}</span>
         <span className="text-sm text-muted-foreground">커밋</span>
       </div>
       <div className="flex items-center gap-2 text-xs text-muted-foreground">

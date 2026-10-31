@@ -21,8 +21,8 @@ export function StatusPill({
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-1 rounded-full font-bold whitespace-nowrap",
-        size === "xs" ? "px-1.5 py-px text-[0.7778rem]" : "px-2 py-0.5 text-xs",
+        "inline-flex shrink-0 items-center gap-2 rounded-full font-bold whitespace-nowrap",
+        size === "xs" ? "px-2 py-px text-[0.875rem]" : "px-2 py-2 text-xs",
         s.soft,
         s.text,
         className

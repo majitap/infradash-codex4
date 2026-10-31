@@ -48,17 +48,17 @@ export function ContributionHeatmap({ days, className }: { days: DailyCommits[];
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <div className="thin-scrollbar overflow-x-auto pb-1">
+      <div className="thin-scrollbar overflow-x-auto pb-2">
         <div className="inline-grid grid-cols-[auto_1fr] gap-x-2">
           <div />
-          <div className="grid gap-[3px] text-[0.7778rem] text-muted-foreground" style={{ gridTemplateColumns: `repeat(${weeks.length}, 12px)` }}>
+          <div className="grid gap-[3px] text-[0.875rem] text-muted-foreground" style={{ gridTemplateColumns: `repeat(${weeks.length}, 12px)` }}>
             {monthLabels.map((label, i) => (
               <span key={i} className="overflow-visible leading-3 whitespace-nowrap">
                 {label}
               </span>
             ))}
           </div>
-          <div className="grid grid-rows-7 gap-[3px] text-[0.7778rem] leading-3 text-muted-foreground">
+          <div className="grid grid-rows-7 gap-[3px] text-[0.875rem] leading-3 text-muted-foreground">
             {ROW_LABELS.map((label, i) => (
               <span key={i} className="flex h-3 items-center">
                 {label}
@@ -85,7 +85,7 @@ export function ContributionHeatmap({ days, className }: { days: DailyCommits[];
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-1.5 text-[0.7778rem] text-muted-foreground">
+      <div className="flex items-center justify-end gap-2 text-[0.875rem] text-muted-foreground">
         <span>적음</span>
         {LEVEL_CLASS.map((c) => (
           <span key={c} className={cn("size-3 rounded-[3px] ring-1 ring-inset ring-foreground/5", c)} />
