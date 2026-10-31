@@ -376,7 +376,7 @@ export function OverviewView() {
               실행 시간
             </span>
             <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.6667rem] font-bold text-emerald-400">
-              측정 중
+              {isRunning ? "측정 중" : "중지됨"}
             </span>
           </div>
 
@@ -402,7 +402,7 @@ export function OverviewView() {
               {isRunning ? <PauseIcon className="size-4 fill-slate-900" /> : <PlayIcon className="size-4 fill-slate-900 ml-0.5" />}
             </button>
             <button
-              onClick={() => toast.success("새 측정 세션이 시작되었습니다.")}
+              onClick={() => { setIsRunning(false); toast.success("측정을 종료했습니다. (데모)") }}
               className="flex size-10 items-center justify-center rounded-full bg-rose-500 hover:bg-rose-600 text-white transition-colors shadow-xs"
               aria-label="측정 종료"
             >
