@@ -112,69 +112,69 @@
 }
 
 :root {
-  /* surfaces: the page plane is the sidebar color, the inset content is --background, cards are white */
-  --background: oklch(0.985 0.004 255);
-  --foreground: oklch(0.2 0.022 265);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.022 265);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.022 265);
-  --primary: oklch(0.52 0.21 270);
-  --primary-foreground: oklch(0.985 0.005 270);
-  --secondary: oklch(0.955 0.01 258);
-  --secondary-foreground: oklch(0.3 0.03 265);
-  --muted: oklch(0.955 0.01 258);
-  --muted-foreground: oklch(0.49 0.025 262);
-  --accent: oklch(0.94 0.028 270);
-  --accent-foreground: oklch(0.32 0.1 270);
-  --destructive: oklch(0.56 0.21 25);
-  --border: oklch(0.905 0.012 258);
-  --input: oklch(0.905 0.012 258);
-  --ring: oklch(0.52 0.21 270);
+  /* Soft, clean, readable pastel dashboard palette inspired by reference */
+  --background: #f4f6fa;
+  --foreground: #181e28;
+  --card: #ffffff;
+  --card-foreground: #181e28;
+  --popover: #ffffff;
+  --popover-foreground: #181e28;
+  --primary: #5551ff; /* Reference royal periwinkle */
+  --primary-foreground: #ffffff;
+  --secondary: #f0f3f8;
+  --secondary-foreground: #344054;
+  --muted: #f4f6fa;
+  --muted-foreground: #707e94;
+  --accent: #f0f2ff;
+  --accent-foreground: #5551ff;
+  --destructive: #f04438;
+  --border: #e8edf5;
+  --input: #e8edf5;
+  --ring: #5551ff;
 
-  /* categorical series, validated order (blue, orange, aqua, yellow, magenta, green, violet, red) */
-  --chart-1: #2a78d6;
-  --chart-2: #eb6834;
-  --chart-3: #1baf7a;
-  --chart-4: #eda100;
-  --chart-5: #e87ba4;
-  --chart-6: #008300;
-  --chart-7: #6250d6;
-  --chart-8: #e34948;
+  /* categorical series, validated order */
+  --chart-1: #5551ff;
+  --chart-2: #7c79ff;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #ec4899;
+  --chart-6: #06b6d4;
+  --chart-7: #6366f1;
+  --chart-8: #ef4444;
 
-  /* status: reserved for meaning, always paired with icon + label */
-  --status-good: #0ca30c;
-  --status-warning: #fab219;
-  --status-serious: #ec835a;
-  --status-critical: #d03b3b;
+  /* status: reserved for meaning */
+  --status-good: #10b981;
+  --status-warning: #f59e0b;
+  --status-serious: #f97316;
+  --status-critical: #ef4444;
 
-  /* sequential blue ramp for heatmaps (light -> dark) */
-  --heat-0: oklch(0.93 0.01 258);
-  --heat-1: #b7d3f6;
-  --heat-2: #6da7ec;
-  --heat-3: #2a78d6;
-  --heat-4: #184f95;
+  /* sequential blue ramp for heatmaps */
+  --heat-0: #f0f3f8;
+  --heat-1: #dbe4ff;
+  --heat-2: #98b4ff;
+  --heat-3: #5551ff;
+  --heat-4: #332ebc;
 
   /* UI accent tones for tiles, chips and icons */
-  --tone-indigo: oklch(0.55 0.2 272);
-  --tone-emerald: oklch(0.63 0.16 160);
-  --tone-amber: oklch(0.72 0.17 70);
-  --tone-rose: oklch(0.6 0.2 15);
-  --tone-sky: oklch(0.62 0.15 235);
-  --tone-violet: oklch(0.58 0.2 300);
-  --tone-teal: oklch(0.62 0.13 195);
-  --tone-orange: oklch(0.68 0.19 45);
+  --tone-indigo: #5551ff;
+  --tone-emerald: #10b981;
+  --tone-amber: #f59e0b;
+  --tone-rose: #f43f5e;
+  --tone-sky: #0ea5e9;
+  --tone-violet: #8b5cf6;
+  --tone-teal: #14b8a6;
+  --tone-orange: #f97316;
 
-  --radius: 0.75rem;
+  --radius: 1.125rem;
 
-  --sidebar: oklch(0.955 0.012 258);
-  --sidebar-foreground: oklch(0.32 0.025 265);
-  --sidebar-primary: oklch(0.52 0.21 270);
-  --sidebar-primary-foreground: oklch(0.985 0.005 270);
-  --sidebar-accent: oklch(0.915 0.025 268);
-  --sidebar-accent-foreground: oklch(0.25 0.09 270);
-  --sidebar-border: oklch(0.89 0.012 258);
-  --sidebar-ring: oklch(0.52 0.21 270);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #5c687a;
+  --sidebar-primary: #5551ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f3ff;
+  --sidebar-accent-foreground: #5551ff;
+  --sidebar-border: #edf1f7;
+  --sidebar-ring: #5551ff;
 }
 
 .dark {

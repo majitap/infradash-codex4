@@ -23,26 +23,24 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning className={`${geistMono.variable} h-full`}>
-      <body className="min-h-full">
+      <body className="min-h-full bg-[#f4f6fa] text-slate-800 antialiased selection:bg-[#5551ff]/20">
         <ThemeProvider>
           <TooltipProvider>
             <CommandMenuProvider>
               <SidebarProvider
                 style={
                   {
-                    "--sidebar-width": "calc(var(--spacing) * 68)",
-                    "--header-height": "calc(var(--spacing) * 14)",
+                    "--sidebar-width": "15rem",
+                    "--header-height": "4.5rem",
                   } as React.CSSProperties
                 }
               >
-                <AppSidebar variant="inset" />
-                <SidebarInset className="min-w-0">
+                <AppSidebar />
+                <SidebarInset className="min-w-0 bg-[#f4f6fa]">
                   <SiteHeader />
-                  <div className="flex flex-1 flex-col">
-                    <div className="@container/main flex flex-1 flex-col">
-                      <div className="flex flex-col gap-5 py-5 md:gap-6 md:py-6">{children}</div>
-                    </div>
-                  </div>
+                  <main className="flex flex-1 flex-col py-2">
+                    {children}
+                  </main>
                 </SidebarInset>
               </SidebarProvider>
               <Toaster richColors position="top-right" />

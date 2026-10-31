@@ -23,7 +23,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
 import {
   geminiAnomalies,
   geminiOptimizations,
@@ -115,12 +114,12 @@ export function AiOpsView() {
           ...prev,
           {
             sender: "gemini",
-            text: `[Gemini 분석 완료] "${userMsg}"에 대한 메트릭 상관 분석을 수행했습니다. 해당 컴포넌트는 최근 1시간 기준 정상 임계치 내에 동작 중이며, 가용성 지표는 99.98%입니다.`,
+            text: `[Gemini 분석 완료] "${userMsg}"에 대한 메트릭 상관 분석을 수행했습니다. 컴포넌트가 최근 1시간 기준 정상 임계치 내에 동작 중이며, 가용성 지표는 99.98%입니다.`,
             details: {
               steps: [
-                "Prometheus 메트릭 시계열(CPU, Memory, Disk IO) 이상점 검출 완료 (Z-Score: 0.42, 정상 범위)",
+                "Prometheus 메트릭 시계열(CPU, Memory, Disk IO) 정상 범위 유지 중",
                 "GitLab Rails 및 Sidekiq 에러 로그 상관성 분석: 특이 오류 0건",
-                "지속적인 자동 모니터링 및 임계치 도달 시 즉시 알림 생성 예정",
+                "지속적인 자동 모니터링 가동 중",
               ],
             },
           },
@@ -131,293 +130,224 @@ export function AiOpsView() {
 
   const handleMitigate = (id: string, actionLabel: string) => {
     toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 1200)),
+      new Promise((resolve) => setTimeout(resolve, 1000)),
       {
-        loading: `${actionLabel} 실행 중...`,
+        loading: `${actionLabel} 적용 중...`,
         success: () => {
           setAnomalies((prev) =>
             prev.map((a) => (a.id === id ? { ...a, resolved: true } : a))
           )
-          return `성공적으로 적용되었습니다: ${actionLabel}`
+          return `완화 조치가 적용되었습니다: ${actionLabel}`
         },
-        error: "실행 중 오류가 발생했습니다.",
+        error: "실행 중 오류 발생",
       }
     )
   }
 
   return (
-    <div className="flex flex-col gap-6 px-4 lg:px-6">
-      {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-violet-500/20 bg-linear-to-r from-violet-950/40 via-background to-blue-950/30 p-6 backdrop-blur-md">
-        <div className="relative z-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-tr from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25">
-              <SparklesIcon className="size-6 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl font-extrabold tracking-tight">Gemini 2.5 Infra Intelligence</h2>
-                <Badge variant="outline" className="border-violet-500/40 bg-violet-500/10 text-violet-400">
-                  <span className="mr-1.5 size-1.5 animate-pulse rounded-full bg-cyan-400" />
-                  실시간 AI 자율 분석 가동 중
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                GitLab EKS 클러스터, Praefect 스토리지, PostgreSQL Patroni 및 CI/CD 파이프라인의 시계열 메트릭 이상 탐지
-              </p>
-            </div>
+    <div className="flex flex-col gap-6 px-6 pb-12 max-w-7xl mx-auto w-full">
+      {/* 1. Header Banner - Clean white card with gentle periwinkle accent */}
+      <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#5551ff] text-white shadow-sm shadow-[#5551ff]/25">
+            <SparklesIcon className="size-6" />
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col text-right text-xs text-muted-foreground">
-              <span>추론 지연 시간: <strong className="text-foreground">24ms</strong></span>
-              <span>모니터링 대상 노드: <strong className="text-foreground">118개 인스턴스</strong></span>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-black text-slate-900">Gemini AI Ops Center</h2>
+              <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-600">
+                Active Monitoring
+              </span>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => toast.success("Gemini가 인프라 텔레메트리 전체를 재검사했습니다. 신규 이상 없음.")}
-              className="gap-2 border-violet-500/30"
-            >
-              <RefreshCwIcon className="size-3.5" />
-              정밀 진단 재스캔
-            </Button>
+            <p className="text-xs text-slate-400 mt-0.5">
+              GitLab EKS 클러스터, Praefect 스토리지 및 CI/CD 파이프라인의 자율 진단
+            </p>
           </div>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => toast.success("Gemini가 인프라 텔레메트리를 재검사했습니다. 신규 이상 없음.")}
+            className="rounded-full bg-white hover:bg-slate-50 border-slate-200 text-xs font-bold px-4 h-9 shadow-xs text-slate-700"
+          >
+            <RefreshCwIcon className="size-3.5 mr-1.5" />
+            재스캔 실행
+          </Button>
         </div>
       </div>
 
-      {/* Interactive AI Investigation Console */}
-      <Card className="border-border/80 shadow-xs">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BotIcon className="size-5 text-violet-500" />
-              <CardTitle className="text-base font-bold">Ask Gemini Infra (대화형 장애 원인 진단)</CardTitle>
-            </div>
-            <Badge variant="secondary" className="text-xs">
-              Gemini Pro 2.5 Telemetry Engine
-            </Badge>
-          </div>
-          <CardDescription>
-            러너 병목, 스토리지 용량 고갈, 파이프라인 지연의 원인과 해결 코드를 자연어로 질문하세요.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {/* Quick Prompts */}
-          <div className="flex flex-wrap gap-2">
-            {SAMPLE_PROMPTS.map((prompt) => (
-              <button
-                key={prompt}
-                onClick={() => handlePrompt(prompt)}
-                className="flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-muted/60 px-3 py-1 text-xs text-muted-foreground transition-all hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-foreground"
-              >
-                <ZapIcon className="size-3 text-amber-500" />
-                {prompt}
-              </button>
-            ))}
-          </div>
-
-          {/* Chat Window */}
-          <div className="flex max-h-96 flex-col gap-3 overflow-y-auto rounded-lg border bg-muted/20 p-4">
-            {chatLog.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex gap-3 text-sm ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-              >
-                {msg.sender === "gemini" && (
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-violet-600/20 text-violet-400">
-                    <SparklesIcon className="size-4" />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[85%] rounded-xl px-4 py-3 leading-relaxed ${
-                    msg.sender === "user"
-                      ? "bg-primary text-primary-foreground font-medium"
-                      : "border border-border/60 bg-card text-card-foreground shadow-xs"
-                  }`}
-                >
-                  <p>{msg.text}</p>
-                  {msg.details && (
-                    <div className="mt-3 flex flex-col gap-2 border-t pt-2.5 text-xs text-muted-foreground">
-                      <span className="font-semibold text-foreground">권장 조치 단계:</span>
-                      <ul className="flex flex-col gap-1 pl-1">
-                        {msg.details.steps.map((st, sIdx) => (
-                          <li key={sIdx}>{st}</li>
-                        ))}
-                      </ul>
-                      {msg.details.code && (
-                        <div className="mt-2 rounded-md bg-zinc-950 p-3 font-mono text-[11px] text-zinc-100 overflow-x-auto">
-                          <pre>{msg.details.code}</pre>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            {isAnalyzing && (
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <SparklesIcon className="size-3.5 animate-spin text-violet-400" />
-                Gemini가 클러스터 텔레메트리 및 로그 시계열을 분석하고 있습니다...
-              </div>
-            )}
-          </div>
-
-          {/* Input Bar */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              executePrompt(query)
-            }}
-            className="flex gap-2"
-          >
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="예: Praefect shard replication lag를 해결하려면 어떤 조치를 해야 하나요?"
-              className="flex-1"
-            />
-            <Button type="submit" disabled={!query.trim() || isAnalyzing} className="gap-2">
-              <SendIcon className="size-4" />
-              질문하기
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-
-      {/* Active AI Anomaly Detections */}
-      <div className="flex flex-col gap-4">
+      {/* 2. Interactive AI Investigation Console */}
+      <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xs flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold">감지된 인프라 이상 징후 (Active Anomalies)</h3>
-            <p className="text-xs text-muted-foreground">
-              Gemini가 감지한 잠재적 장애 위험 및 자동 완화 추천 조치
+            <h3 className="text-sm font-bold text-slate-900">Ask Gemini Infra (대화형 원인 진단)</h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              자연어로 러너 상태, 파이프라인 오류, 스토리지 병목 원인을 질문하세요.
             </p>
           </div>
-          <Badge variant="outline" className="gap-1.5">
-            <AlertTriangleIcon className="size-3.5 text-amber-500" />
+          <span className="rounded-full bg-[#5551ff]/10 text-[#5551ff] px-3 py-1 text-xs font-semibold">
+            Gemini 2.5 Engine
+          </span>
+        </div>
+
+        {/* Quick Prompts */}
+        <div className="flex flex-wrap gap-2 pt-1">
+          {SAMPLE_PROMPTS.map((prompt) => (
+            <button
+              key={prompt}
+              onClick={() => handlePrompt(prompt)}
+              className="rounded-full border border-slate-200/80 bg-slate-50 hover:bg-[#5551ff]/10 hover:border-[#5551ff]/30 hover:text-[#5551ff] px-3.5 py-1.5 text-xs text-slate-600 font-medium transition-all"
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+
+        {/* Chat Window */}
+        <div className="flex max-h-80 flex-col gap-3 overflow-y-auto rounded-2xl border border-slate-100 bg-[#f9fafc] p-4">
+          {chatLog.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`flex gap-3 text-xs ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+            >
+              {msg.sender === "gemini" && (
+                <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-[#5551ff] text-white shadow-xs">
+                  <SparklesIcon className="size-3.5" />
+                </div>
+              )}
+              <div
+                className={`max-w-[85%] rounded-2xl px-4 py-3 leading-relaxed ${
+                  msg.sender === "user"
+                    ? "bg-[#5551ff] text-white font-medium shadow-xs"
+                    : "border border-slate-200/60 bg-white text-slate-800 shadow-xs"
+                }`}
+              >
+                <p>{msg.text}</p>
+                {msg.details && (
+                  <div className="mt-3 flex flex-col gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
+                    <span className="font-bold text-slate-800">권장 조치:</span>
+                    <ul className="flex flex-col gap-1 pl-1">
+                      {msg.details.steps.map((st, sIdx) => (
+                        <li key={sIdx}>{st}</li>
+                      ))}
+                    </ul>
+                    {msg.details.code && (
+                      <div className="mt-2 rounded-xl bg-slate-900 p-3 font-mono text-[11px] text-slate-100 overflow-x-auto">
+                        <pre>{msg.details.code}</pre>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          {isAnalyzing && (
+            <div className="flex items-center gap-2 text-xs text-slate-400">
+              <SparklesIcon className="size-3.5 animate-spin text-[#5551ff]" />
+              Gemini가 인프라 텔레메트리를 분석 중입니다...
+            </div>
+          )}
+        </div>
+
+        {/* Input Bar */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            executePrompt(query)
+          }}
+          className="flex gap-2"
+        >
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="질문을 입력하세요..."
+            className="rounded-full bg-slate-50 border-slate-200 text-xs px-4 h-11 focus-visible:ring-[#5551ff]"
+          />
+          <Button
+            type="submit"
+            disabled={!query.trim() || isAnalyzing}
+            className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold px-6 h-11 shadow-sm shadow-[#5551ff]/20"
+          >
+            <SendIcon className="size-3.5 mr-1.5" />
+            질문
+          </Button>
+        </form>
+      </div>
+
+      {/* 3. Active Anomalies Grid */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-900">감지된 이상 징후 (Active Anomalies)</h3>
+          <span className="text-xs text-slate-400">
             {anomalies.filter((a) => !a.resolved).length}건 조치 대기
-          </Badge>
+          </span>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
           {anomalies.map((item) => (
-            <Card
+            <div
               key={item.id}
-              className={`transition-all ${
+              className={`rounded-3xl border p-5 flex flex-col justify-between transition-all ${
                 item.resolved
-                  ? "border-muted bg-muted/20 opacity-70"
-                  : item.severity === "critical"
-                  ? "border-rose-500/40 bg-rose-500/5 shadow-xs"
-                  : "border-amber-500/30 bg-amber-500/5 shadow-xs"
+                  ? "border-slate-100 bg-slate-50/60 opacity-60"
+                  : "border-slate-200/80 bg-white shadow-xs"
               }`}
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant={
-                        item.resolved
-                          ? "outline"
-                          : item.severity === "critical"
-                          ? "destructive"
-                          : "default"
-                      }
-                      className="text-[11px]"
-                    >
-                      {item.resolved ? "완화됨" : item.severity.toUpperCase()}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">{item.timestamp}</span>
-                  </div>
-                  <span className="text-xs font-semibold text-violet-400">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
+                    item.resolved
+                      ? "bg-slate-100 text-slate-500"
+                      : item.severity === "critical"
+                      ? "bg-rose-50 text-rose-600 border border-rose-100"
+                      : "bg-amber-50 text-amber-600 border border-amber-100"
+                  }`}>
+                    {item.resolved ? "완화됨" : item.severity.toUpperCase()}
+                  </span>
+                  <span className="text-[11px] font-semibold text-[#5551ff]">
                     신뢰도 {item.confidence}%
                   </span>
                 </div>
-                <CardTitle className="text-sm font-bold leading-snug pt-1">
+
+                <h4 className="text-sm font-bold text-slate-900 leading-snug">
                   {item.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-2.5 text-xs">
-                <p className="text-muted-foreground">{item.summary}</p>
-                <div className="rounded-lg border bg-background/60 p-2.5">
-                  <span className="font-semibold text-foreground">근본 원인 (RCA):</span>
-                  <p className="mt-0.5 text-muted-foreground">{item.rootCause}</p>
+                </h4>
+                <p className="mt-1 text-xs text-slate-500 leading-relaxed">
+                  {item.summary}
+                </p>
+
+                <div className="mt-3 rounded-2xl bg-slate-50 border border-slate-100 p-3 text-xs text-slate-600">
+                  <strong className="text-slate-800">근본 원인: </strong>
+                  {item.rootCause}
                 </div>
-                <div className="rounded-lg border border-violet-500/20 bg-violet-500/5 p-2.5">
-                  <span className="font-semibold text-violet-400">Gemini 권장 조치:</span>
-                  <p className="mt-0.5 text-foreground">{item.recommendedAction}</p>
-                </div>
-              </CardContent>
-              <CardFooter className="flex items-center justify-between border-t pt-3">
-                <span className="text-[11px] text-muted-foreground">
-                  영향 노드: {item.affectedNodes.join(", ")}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                <span className="text-[10px] text-slate-400">
+                  {item.timestamp}
                 </span>
+
                 {item.resolved ? (
-                  <Badge variant="outline" className="gap-1 text-emerald-500 border-emerald-500/30">
-                    <CheckCircle2Icon className="size-3" />
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
+                    <CheckCircle2Icon className="size-3.5" />
                     조치 완료
-                  </Badge>
+                  </span>
                 ) : (
                   <Button
                     size="sm"
-                    variant={item.severity === "critical" ? "default" : "outline"}
                     onClick={() => handleMitigate(item.id, item.actionLabel)}
-                    className="gap-1.5 text-xs"
+                    className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold px-4 h-8 shadow-xs"
                   >
-                    <Wand2Icon className="size-3.5" />
+                    <Wand2Icon className="size-3 mr-1" />
                     {item.actionLabel}
                   </Button>
                 )}
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>
-
-      {/* Autonomous Optimization History */}
-      <Card className="border-border/80 shadow-xs">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <ZapIcon className="size-5 text-emerald-500" />
-              <CardTitle className="text-base font-bold">최근 자동 최적화 적용 내역 (Optimization Log)</CardTitle>
-            </div>
-            <Badge variant="secondary" className="text-xs">
-              지난 24시간 4건 자동 적용
-            </Badge>
-          </div>
-          <CardDescription>
-            Gemini 자율 최적화 에이전트가 성능 및 리소스 절감을 위해 자동 실행한 결과입니다.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col divide-y rounded-lg border">
-            {geminiOptimizations.map((opt) => (
-              <div key={opt.id} className="flex flex-col gap-2 p-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex flex-col gap-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-foreground">{opt.title}</span>
-                    <Badge variant="outline" className="text-[10px] font-mono text-muted-foreground">
-                      {opt.target}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{opt.metricBefore}</span>
-                    <span>→</span>
-                    <strong className="text-foreground">{opt.metricAfter}</strong>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="gap-1 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
-                    <TrendingDownIcon className="size-3" />
-                    {opt.improvement}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground">{opt.timestamp}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

@@ -1,363 +1,430 @@
 "use client"
 
+import * as React from "react"
 import Link from "next/link"
 import {
-  ArrowRightIcon,
-  ChevronRightIcon,
-  CircleArrowUpIcon,
-  CircleCheckIcon,
-  CirclePauseIcon,
-  CircleXIcon,
-  GitCommitHorizontalIcon,
-  GitPullRequestIcon,
-  HardDriveIcon,
+  ArrowUpRightIcon,
+  CheckCircle2Icon,
+  CircleIcon,
+  LayersIcon,
+  PauseIcon,
+  PlayIcon,
+  PlusIcon,
+  RefreshCwIcon,
+  RocketIcon,
   ServerIcon,
-  ShieldAlertIcon,
-  SirenIcon,
   SparklesIcon,
-  TimerIcon,
-  UsersIcon,
   WorkflowIcon,
-  type LucideIcon,
+  ZapIcon,
 } from "lucide-react"
+import { toast } from "sonner"
 
-import { PipelineAreaChart, usePipelineRange } from "@/components/charts/pipeline-area-chart"
-import { ActivityFeed } from "@/components/dashboard/activity-feed"
-import { ContributionHeatmap } from "@/components/dashboard/contribution-heatmap"
-import { DonutChart } from "@/components/dashboard/donut-chart"
-import { KpiGrid, KpiTile } from "@/components/dashboard/kpi-tile"
-import { Leaderboard } from "@/components/dashboard/leaderboard"
-import { Section } from "@/components/dashboard/section-header"
-import { StatusPill } from "@/components/dashboard/status-pill"
-import { trendOf } from "@/components/dashboard/trend-badge"
-import { UserAvatar } from "@/components/dashboard/user-avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { fmtDate, fmtInt, fmtMinutes, fmtPct, fmtSize } from "@/lib/format"
-import {
-  MONTHS_12,
-  activeUsers,
-  activityFeed,
-  approvedMRs,
-  busiestDay,
-  commits30d,
-  commitsLastWeek,
-  commitsThisWeek,
-  dailyCommits,
-  dailyPipelines,
-  geminiAnomalies,
-  joiners,
-  leavers,
-  leaderboard,
-  mergedLastWeek,
-  mergedThisWeek,
-  openIncidents,
-  openMRs,
-  pipelines7d,
-  runnerBusy,
-  runnerCapacity,
-  runnerCounts,
-  runners,
-  severityTotals,
-  staleMRs,
-  storageQuotaMb,
-  storageTotalMb,
-  successRate7d,
-  successRatePrev7d,
-  upgradePlan,
-  users,
-  weeklyTeamCommits,
-  weeklyThroughput,
-} from "@/lib/mock-data"
-import { STATUS, type Status } from "@/lib/tones"
-import { cn } from "@/lib/utils"
-
-/** active accounts at the end of each of the last 12 months */
-const monthlyActiveUsers = MONTHS_12.map((m) =>
-  users.filter((u) => u.status !== "pending" && u.joinedAt <= `${m}-31` && (!u.leftAt || u.leftAt > `${m}-31`)).length
-)
-const dailySuccessRate = dailyPipelines.slice(-14).map((d) => (d.success / (d.success + d.failed)) * 100)
-
-type Attention = { label: string; detail: string; status: Status; href: string; icon: LucideIcon }
-
-function GeminiBanner() {
-  const topAnomaly = geminiAnomalies[0]
-  if (!topAnomaly) return null
-  return (
-    <Section>
-      <Link
-        href="/ai-ops"
-        className="group flex items-center gap-3.5 rounded-xl border border-violet-500/30 bg-linear-to-r from-violet-500/10 via-background to-blue-500/10 px-4 py-3 text-sm transition-all hover:border-violet-500/60 hover:shadow-xs"
-      >
-        <span className="relative flex size-9 shrink-0 items-center justify-center rounded-lg bg-linear-to-tr from-violet-600 to-cyan-500 text-white shadow-xs">
-          <SparklesIcon className="size-5" />
-          <span className="absolute -top-0.5 -right-0.5 size-2.5 animate-ping rounded-full bg-cyan-400 opacity-75" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-            <span className="font-extrabold text-violet-400">Gemini AI 예측 알림</span>
-            <span className="truncate font-bold">
-              {topAnomaly.title}
-            </span>
-          </div>
-          <div className="mt-0.5 flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
-            <span>신뢰도 {topAnomaly.confidence}%</span>
-            <span>{topAnomaly.summary}</span>
-            <span className="font-semibold text-violet-400">추천: {topAnomaly.actionLabel} →</span>
-          </div>
-        </div>
-        <ChevronRightIcon className="size-5 shrink-0 text-violet-400 transition-transform group-hover:translate-x-0.5" />
-      </Link>
-    </Section>
-  )
-}
-
-function IncidentBanner() {
-  const s1 = openIncidents.find((i) => i.severity === "S1")
-  if (!s1) return null
-  return (
-    <Section>
-      <Link
-        href="/incidents"
-        className="group flex items-center gap-3 rounded-xl border border-rose-500/30 bg-rose-500/8 px-4 py-3 text-sm transition-colors hover:bg-rose-500/12 dark:bg-rose-500/10"
-      >
-        <span className="relative flex size-9 shrink-0 items-center justify-center rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-300">
-          <SirenIcon className="size-5" />
-          <span className="absolute -top-0.5 -right-0.5 size-2.5 animate-ping rounded-full bg-rose-500 opacity-70" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-            <span className="font-extrabold text-rose-700 dark:text-rose-300">S1 인시던트 진행 중</span>
-            <span className="truncate font-bold">
-              {s1.id} · {s1.title}
-            </span>
-          </div>
-          <div className="mt-0.5 flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1">
-              <TimerIcon className="size-3.5" />
-              {fmtMinutes(s1.durationMin)} 경과
-            </span>
-            <span>{s1.impact}</span>
-            <span className="inline-flex items-center gap-1">
-              담당 <UserAvatar name={s1.owner.name} hue={s1.owner.hue} size="xs" className="size-4 text-[9px]" /> {s1.owner.name}
-            </span>
-          </div>
-        </div>
-        <ChevronRightIcon className="size-5 shrink-0 text-rose-600/70 transition-transform group-hover:translate-x-0.5 dark:text-rose-300/70" />
-      </Link>
-    </Section>
-  )
-}
 
 export function OverviewView() {
-  const { range, control } = usePipelineRange()
-  const top5 = leaderboard("thisWeek", 5)
-  const needsReview = openMRs.filter((m) => m.state === "open" && m.approvals < m.approvalsRequired).length
-  const critical = severityTotals.find((s) => s.severity === "critical")?.count ?? 0
-  const offlineRunners = runners.filter((r) => r.status === "offline")
-  const storagePct = (storageTotalMb / storageQuotaMb) * 100
+  const [isRunning, setIsRunning] = React.useState(true)
 
-  const attention: Attention[] = [
-    ...(openIncidents.length
-      ? [{ label: `인시던트 ${openIncidents.length}건 진행 중`, detail: openIncidents.map((i) => i.id).join(", "), status: "critical" as Status, href: "/incidents", icon: SirenIcon }]
-      : []),
-    { label: "Gemini AI 위험 예측 1건", detail: "AWS 스팟 러너 사전 중단 리스크 (신뢰도 96%)", status: "warning" as Status, href: "/ai-ops", icon: SparklesIcon },
-    { label: `치명 취약점 ${critical}건`, detail: "시크릿 노출 1 · SQL 인젝션 1", status: critical > 0 ? "critical" : "good", href: "/security", icon: ShieldAlertIcon },
-    { label: `러너 ${offlineRunners.length}대 오프라인`, detail: offlineRunners.map((r) => r.name).join(", "), status: offlineRunners.length ? "warning" : "good", href: "/runners", icon: ServerIcon },
-    { label: `10일 이상 열린 MR ${staleMRs.length}건`, detail: `가장 오래된 !${staleMRs[0]?.iid}`, status: staleMRs.length > 3 ? "warning" : "neutral", href: "/merge-requests", icon: GitPullRequestIcon },
-    { label: `스토리지 ${storagePct.toFixed(0)}% 사용`, detail: `${fmtSize(storageTotalMb)} / ${fmtSize(storageQuotaMb)}`, status: storagePct > 80 ? "warning" : "good", href: "/storage", icon: HardDriveIcon },
-    { label: "업그레이드 D-15", detail: `${upgradePlan.currentVersion} → ${upgradePlan.targetVersion} · 11월 15일`, status: "info", href: "/upgrade", icon: CircleArrowUpIcon },
+  // Daily activity pill bar heights (matching the reference image's Project Analytics pill chart)
+  const dailyData = [
+    { day: "M", height: "72%", count: 184 },
+    { day: "T", height: "94%", count: 242 },
+    { day: "W", height: "65%", count: 168 },
+    { day: "T", height: "88%", count: 226 },
+    { day: "F", height: "100%", count: 258 },
+    { day: "S", height: "35%", count: 88 },
+    { day: "S", height: "42%", count: 104 },
   ]
 
   return (
-    <>
-      <GeminiBanner />
-      <IncidentBanner />
+    <div className="flex flex-col gap-6 px-6 pb-12 max-w-7xl mx-auto w-full">
+      {/* 1. Page Title & Action Buttons like reference image */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
+        <div>
+          <h1 className="text-3xl font-black tracking-tight text-slate-900">
+            Dashboard
+          </h1>
+          <p className="text-xs text-slate-400 mt-1">
+            A quick view of your GitLab infrastructure and team pipelines.
+          </p>
+        </div>
 
-      <KpiGrid>
-        <KpiTile
-          label="활성 사용자"
-          value={fmtInt(activeUsers.length)}
-          unit="명"
-          hint={`30일 입사 ${joiners.length} · 퇴사 ${leavers.length}`}
-          trend={trendOf(joiners.length, leavers.length, { suffix: "명" })}
-          icon={UsersIcon}
-          tone="indigo"
-          spark={monthlyActiveUsers}
-          href="/users"
-        />
-        <KpiTile
-          label="이번 주 커밋"
-          value={fmtInt(commitsThisWeek)}
-          unit="개"
-          hint={`지난주 ${fmtInt(commitsLastWeek)}개 · 토요일 오전 기준`}
-          trend={trendOf(commitsThisWeek, commitsLastWeek, { pct: true })}
-          icon={GitCommitHorizontalIcon}
-          tone="violet"
-          spark={weeklyTeamCommits.map((w) => w.count)}
-          href="/commits"
-        />
-        <KpiTile
-          label="열린 머지 리퀘스트"
-          value={fmtInt(openMRs.length)}
-          unit="건"
-          hint={`리뷰 대기 ${needsReview} · 승인됨 ${approvedMRs.length} · 이번 주 머지 ${mergedThisWeek} (지난주 ${mergedLastWeek})`}
-          icon={GitPullRequestIcon}
-          tone="orange"
-          spark={weeklyThroughput.map((w) => w.merged)}
-          href="/merge-requests"
-        />
-        <KpiTile
-          label="파이프라인 성공률"
-          value={fmtPct(successRate7d, 1)}
-          hint={`7일간 ${fmtInt(pipelines7d)}회 실행`}
-          trend={trendOf(successRate7d, successRatePrev7d, { digits: 1, suffix: "pt" })}
-          icon={WorkflowIcon}
-          tone="sky"
-          spark={dailySuccessRate}
-          href="/pipelines"
-        />
-      </KpiGrid>
+        <div className="flex items-center gap-2.5">
+          <Button
+            size="sm"
+            onClick={() => toast.success("새 파이프라인 트리거 요청이 전송되었습니다.")}
+            className="rounded-full bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold px-5 h-10 shadow-sm shadow-[#5551ff]/25"
+          >
+            <PlusIcon className="size-3.5 mr-1" />
+            Add Pipeline
+          </Button>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @5xl/main:grid-cols-3">
-        <Card className="@container/card @5xl/main:col-span-2">
-          <CardHeader>
-            <CardTitle>파이프라인 실행</CardTitle>
-            <CardDescription>일별 성공 / 실패 건수</CardDescription>
-            <CardAction>{control}</CardAction>
-          </CardHeader>
-          <CardContent>
-            <PipelineAreaChart days={dailyPipelines.slice(-range)} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>이번 주 커밋 TOP 5</CardTitle>
-            <CardDescription>10/26 ~ 11/1 · 지난주 대비</CardDescription>
-            <CardAction>
-              <Button variant="ghost" size="sm" render={<Link href="/commits" />}>
-                전체 순위
-                <ArrowRightIcon />
-              </Button>
-            </CardAction>
-          </CardHeader>
-          <CardContent>
-            <Leaderboard rows={top5} />
-          </CardContent>
-        </Card>
+          <Link
+            href="/runners"
+            className="inline-flex items-center justify-center rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold px-5 h-10 shadow-xs transition-colors"
+          >
+            Runner Fleet
+          </Link>
+        </div>
       </div>
 
-      <Section>
-        <Card>
-          <CardHeader>
-            <CardTitle>최근 1년 커밋 활동</CardTitle>
-            <CardDescription>
-              30일 커밋 <b className="text-foreground">{fmtInt(commits30d)}</b>개 · 가장 활발했던 날{" "}
-              <b className="text-foreground">{fmtDate(busiestDay.date)}</b> ({fmtInt(busiestDay.count)}개)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ContributionHeatmap days={dailyCommits} />
-          </CardContent>
-        </Card>
-      </Section>
+      {/* 2. Top 4 Metric KPI Cards (1 highlighted solid royal periwinkle, 3 crisp white) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Active Highlighted Card in Solid Royal Periwinkle */}
+        <div className="rounded-3xl bg-[#5551ff] text-white p-5 shadow-sm shadow-[#5551ff]/20 flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-white/90">
+              Pipeline Success
+            </span>
+            <div className="flex size-7 items-center justify-center rounded-full bg-white/20 text-white">
+              <ArrowUpRightIcon className="size-4" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-black tracking-tight">98.4%</div>
+            <div className="mt-1 flex items-center gap-1.5 text-[11px] text-white/80">
+              <span className="inline-block size-1.5 rounded-full bg-emerald-300" />
+              <span>Increased from last month</span>
+            </div>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @3xl/main:grid-cols-2 @6xl/main:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>러너 현황</CardTitle>
-            <CardDescription>
-              동시 실행 {runnerBusy} / 용량 {runnerCapacity}
-            </CardDescription>
-            <CardAction>
-              <Button variant="ghost" size="sm" render={<Link href="/runners" />}>
-                자세히
-                <ArrowRightIcon />
-              </Button>
-            </CardAction>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <DonutChart
-              data={[
-                { key: "online", label: "온라인", value: runnerCounts.online, color: "var(--status-good)" },
-                { key: "paused", label: "일시중지", value: runnerCounts.paused, color: "var(--status-warning)" },
-                { key: "offline", label: "오프라인", value: runnerCounts.offline, color: "var(--status-critical)" },
-              ]}
-              centerValue={String(runnerCounts.all)}
-              centerLabel="러너"
-              legend="bottom"
-            />
-            <div>
-              <div className="mb-1.5 flex justify-between text-xs text-muted-foreground">
-                <span>사용 중인 슬롯</span>
-                <span className="tabular-nums">{fmtPct((runnerBusy / runnerCapacity) * 100, 0)}</span>
+        {/* Card 2: White Card */}
+        <div className="rounded-3xl bg-white border border-slate-200/70 p-5 shadow-xs flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">
+              Active Runners
+            </span>
+            <div className="flex size-7 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <ArrowUpRightIcon className="size-4" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-black tracking-tight text-slate-900">145</div>
+            <div className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-400">
+              <span className="inline-block size-1.5 rounded-full bg-[#5551ff]" />
+              <span>Increased from last month</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: White Card */}
+        <div className="rounded-3xl bg-white border border-slate-200/70 p-5 shadow-xs flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">
+              Pending Deploys
+            </span>
+            <div className="flex size-7 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <ArrowUpRightIcon className="size-4" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-black tracking-tight text-slate-900">32</div>
+            <div className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-400">
+              <span className="inline-block size-1.5 rounded-full bg-amber-400" />
+              <span>All review apps healthy</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4: White Card */}
+        <div className="rounded-3xl bg-white border border-slate-200/70 p-5 shadow-xs flex flex-col justify-between min-h-[140px] transition-transform hover:-translate-y-0.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">
+              Lead Time for Changes
+            </span>
+            <div className="flex size-7 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <ArrowUpRightIcon className="size-4" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-black tracking-tight text-slate-900">24m</div>
+            <div className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-400">
+              <span className="inline-block size-1.5 rounded-full bg-emerald-400" />
+              <span>Elite DORA tier benchmark</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Middle Row (Pill Bar Chart + Gemini Quick Card + Recent Deployments) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Left: Project Analytics Capsule Bar Chart (5 cols) */}
+        <div className="lg:col-span-5 rounded-3xl bg-white border border-slate-200/70 p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xs font-bold text-slate-800">
+              Project Analytics
+            </h3>
+            <span className="text-[11px] text-slate-400">Weekly Builds</span>
+          </div>
+
+          {/* Capsule/Pill Bar Chart directly matching the reference image */}
+          <div className="flex items-end justify-between gap-3 h-40 pt-4 px-2">
+            {dailyData.map((d) => (
+              <div key={d.day} className="flex flex-col items-center gap-2 flex-1 h-full justify-end">
+                <div className="relative w-full max-w-[34px] h-32 rounded-full bg-slate-100 flex flex-col justify-end p-1 transition-all hover:bg-slate-200/70">
+                  <div
+                    style={{ height: d.height }}
+                    className="w-full rounded-full bg-[#5551ff] transition-all duration-500 shadow-xs"
+                    title={`${d.count} builds`}
+                  />
+                </div>
+                <span className="text-[11px] font-bold text-slate-400">
+                  {d.day}
+                </span>
               </div>
-              <div className="flex h-2 gap-0.5 overflow-hidden rounded-full bg-muted">
-                <div className="h-full rounded-full bg-tone-teal" style={{ width: `${(runnerBusy / runnerCapacity) * 100}%` }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Center: Gemini AI Quick Insight Card (4 cols) */}
+        <div className="lg:col-span-4 rounded-3xl bg-white border border-slate-200/70 p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-slate-800">
+                Gemini AI Insights
+              </span>
+              <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+            </div>
+            <h4 className="text-base font-black text-[#5551ff] mt-2 leading-tight">
+              Cluster Healthy & Optimized
+            </h4>
+            <p className="text-[11px] text-slate-400 mt-1">
+              Time · 24m avg cycle time
+            </p>
+
+            <p className="text-xs text-slate-600 mt-4 leading-relaxed">
+              EKS 스팟 인스턴스 64대가 안정적으로 자동 할당되어 있으며, 전체 118개 인프라 노드가 정상 가동 중입니다.
+            </p>
+          </div>
+
+          <Link
+            href="/ai-ops"
+            className="w-full mt-5 inline-flex items-center justify-center rounded-2xl bg-[#5551ff] hover:bg-[#4743eb] text-white text-xs font-bold h-10 shadow-sm shadow-[#5551ff]/20 transition-colors"
+          >
+            <SparklesIcon className="size-3.5 mr-2" />
+            Start AI Diagnostics
+          </Link>
+        </div>
+
+        {/* Right: Recent Deployments (3 cols) */}
+        <div className="lg:col-span-3 rounded-3xl bg-white border border-slate-200/70 p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-bold text-slate-800">
+              Project Analytics
+            </h3>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
+              + New
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 text-xs font-bold">
+                <WorkflowIcon className="size-3.5" />
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-xs font-bold text-slate-800 truncate">Develop API Endpoints</span>
+                <span className="text-[10px] text-slate-400 truncate">Due date: Oct 28, 2026</span>
               </div>
             </div>
-            <ul className="flex flex-col gap-1.5 text-sm">
-              {runners.filter((r) => r.status !== "online").map((r) => (
-                <li key={r.id} className="flex items-center justify-between gap-2">
-                  <span className="truncate font-mono text-[13px]">{r.name}</span>
-                  <StatusPill
-                    status={r.status === "offline" ? "critical" : "warning"}
-                    label={r.status === "offline" ? "오프라인" : "일시중지"}
-                    icon={r.status === "offline" ? CircleXIcon : CirclePauseIcon}
-                    size="xs"
-                  />
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>최근 활동</CardTitle>
-            <CardDescription>푸시, 머지, 파이프라인, 인시던트</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ActivityFeed items={activityFeed.slice(0, 8)} />
-          </CardContent>
-        </Card>
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 text-xs font-bold">
+                <CheckCircle2Icon className="size-3.5" />
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-xs font-bold text-slate-800 truncate">Onboarding Flow</span>
+                <span className="text-[10px] text-slate-400 truncate">Due date: Oct 26, 2026</span>
+              </div>
+            </div>
 
-        <Card className="@3xl/main:col-span-2 @6xl/main:col-span-1">
-          <CardHeader>
-            <CardTitle>주의가 필요한 항목</CardTitle>
-            <CardDescription>지금 확인해야 할 것들</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-1.5">
-            {attention.map((a) => {
-              const s = STATUS[a.status]
-              return (
-                <Link
-                  key={a.label}
-                  href={a.href}
-                  className="group flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors hover:bg-muted/60"
-                >
-                  <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg", s.soft, s.text)}>
-                    <a.icon className="size-4" />
-                  </span>
-                  <div className="min-w-0 flex-1 leading-tight">
-                    <div className="truncate text-sm font-bold">{a.label}</div>
-                    <div className="truncate text-xs text-muted-foreground">{a.detail}</div>
-                  </div>
-                  {a.status === "good" ? (
-                    <CircleCheckIcon className="size-4 shrink-0 text-emerald-600 dark:text-emerald-300" />
-                  ) : (
-                    <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-                  )}
-                </Link>
-              )
-            })}
-          </CardContent>
-          <CardFooter className="text-xs text-muted-foreground">
-            모든 수치는 lib/mock-data.ts의 모의 데이터이며 실제 시스템과 연결되어 있지 않습니다.
-          </CardFooter>
-        </Card>
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 text-xs font-bold">
+                <RocketIcon className="size-3.5" />
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-xs font-bold text-slate-800 truncate">Build Dashboard</span>
+                <span className="text-[10px] text-slate-400 truncate">Due date: Oct 24, 2026</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 text-xs font-bold">
+                <ZapIcon className="size-3.5" />
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-xs font-bold text-slate-800 truncate">Optimize Page Load</span>
+                <span className="text-[10px] text-slate-400 truncate">Due date: Oct 21, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+
+      {/* 4. Bottom Row (Active Services + 41% Gauge Meter + Dark Uptime Card) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Left: Active Services / Team list (5 cols) */}
+        <div className="lg:col-span-5 rounded-3xl bg-white border border-slate-200/70 p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xs font-bold text-slate-800">
+              Project Analytics
+            </h3>
+            <button
+              onClick={() => toast.success("멤버 초대 창이 열립니다.")}
+              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-[10px] font-bold text-slate-600 transition-colors"
+            >
+              + Add Member
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-3.5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Avatar className="size-8 rounded-full bg-indigo-100 text-[#5551ff]">
+                  <AvatarFallback className="text-xs font-bold">AD</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-bold text-slate-800">Alexandria Deff</span>
+                  <span className="text-[10px] text-slate-400">Working on GitHub Project Repository</span>
+                </div>
+              </div>
+              <span className="rounded-full bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 text-[10px] font-bold text-[#5551ff]">
+                Completed
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Avatar className="size-8 rounded-full bg-amber-100 text-amber-700">
+                  <AvatarFallback className="text-xs font-bold">EA</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-bold text-slate-800">Edwin Adenike</span>
+                  <span className="text-[10px] text-slate-400">Integrated User Authentication System</span>
+                </div>
+              </div>
+              <span className="rounded-full bg-amber-50 border border-amber-100 px-2.5 py-0.5 text-[10px] font-bold text-amber-600">
+                In Progress
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Avatar className="size-8 rounded-full bg-rose-100 text-rose-700">
+                  <AvatarFallback className="text-xs font-bold">IO</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-bold text-slate-800">Isaac Oluwatemilorun</span>
+                  <span className="text-[10px] text-slate-400">Working on Desktop Search and Filter</span>
+                </div>
+              </div>
+              <span className="rounded-full bg-rose-50 border border-rose-100 px-2.5 py-0.5 text-[10px] font-bold text-rose-600">
+                Pending
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Center: Semicircle Progress Gauge 41% like reference image (4 cols) */}
+        <div className="lg:col-span-4 rounded-3xl bg-white border border-slate-200/70 p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xs font-bold text-slate-800">
+              Project Analytics
+            </h3>
+            <span className="text-[10px] text-slate-400">Cluster Capacity</span>
+          </div>
+
+          {/* Semicircle Gauge Graphic matching screenshot */}
+          <div className="flex flex-col items-center justify-center py-2">
+            <div className="relative flex flex-col items-center justify-center">
+              <svg viewBox="0 0 160 85" className="w-48 overflow-visible">
+                {/* Background arc */}
+                <path
+                  d="M 15 80 A 65 65 0 0 1 145 80"
+                  fill="none"
+                  stroke="#e8ebf8"
+                  strokeWidth="16"
+                  strokeLinecap="round"
+                />
+                {/* Progress arc (41% filled) */}
+                <path
+                  d="M 15 80 A 65 65 0 0 1 145 80"
+                  fill="none"
+                  stroke="#5551ff"
+                  strokeWidth="16"
+                  strokeDasharray="204"
+                  strokeDashoffset="120"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute bottom-0 flex flex-col items-center">
+                <span className="text-3xl font-black text-slate-900 tracking-tight">41%</span>
+                <span className="text-[10px] font-semibold text-slate-400">Project Ended</span>
+              </div>
+            </div>
+
+            {/* Legend below matching reference image */}
+            <div className="mt-4 flex items-center justify-center gap-3 text-[10px] text-slate-400 font-semibold">
+              <span className="flex items-center gap-1">
+                <span className="size-2 rounded-full bg-[#5551ff]" />
+                Completed
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="size-2 rounded-full bg-[#8b87ff]" />
+                In Progress
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="size-2 rounded-full bg-[#e8ebf8]" />
+                Pending
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Dark Navy Uptime Card like Time Tracker in reference image (3 cols) */}
+        <div className="lg:col-span-3 rounded-3xl bg-slate-950 text-white p-6 shadow-md flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold text-white/90">
+              Time Tracker
+            </span>
+            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[9px] font-bold text-emerald-400">
+              LIVE
+            </span>
+          </div>
+
+          <div className="my-auto py-3 text-center">
+            <div className="text-2xl sm:text-3xl font-mono font-black tracking-wider text-white">
+              01:24:08
+            </div>
+            <p className="text-[10px] text-slate-400 mt-1">
+              Active Run · 99.99% Availability
+            </p>
+          </div>
+
+          {/* Action buttons like in screenshot */}
+          <div className="flex items-center justify-center gap-3 mt-2">
+            <button
+              onClick={() => {
+                setIsRunning(!isRunning)
+                toast.success(isRunning ? "러너 모니터링 일시정지" : "러너 모니터링 재개")
+              }}
+              className="flex size-10 items-center justify-center rounded-full bg-white text-slate-900 hover:bg-slate-100 transition-colors shadow-xs"
+              aria-label="Pause"
+            >
+              {isRunning ? <PauseIcon className="size-4 fill-slate-900" /> : <PlayIcon className="size-4 fill-slate-900 ml-0.5" />}
+            </button>
+            <button
+              onClick={() => toast.success("새 측정 세션이 시작되었습니다.")}
+              className="flex size-10 items-center justify-center rounded-full bg-rose-500 hover:bg-rose-600 text-white transition-colors shadow-xs"
+              aria-label="Stop"
+            >
+              <div className="size-3 rounded-xs bg-white" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

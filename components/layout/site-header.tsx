@@ -2,76 +2,83 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { CalendarIcon, SearchIcon, SparklesIcon } from "lucide-react"
+import { BellIcon, ChevronDownIcon, MailIcon, SearchIcon, SparklesIcon } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Notifications } from "@/components/layout/notifications"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { useCommandMenu } from "@/components/layout/command-menu"
-import { fmtDateFull } from "@/lib/format"
-import { MOCK_TODAY } from "@/lib/mock-data"
 import { findNavItem } from "@/lib/nav"
-import { TONES } from "@/lib/tones"
 
 export function SiteHeader() {
   const item = findNavItem(usePathname())
   const { setOpen } = useCommandMenu()
-  const tone = item ? TONES[item.tone] : TONES.indigo
 
   return (
-    <header className="sticky top-0 z-20 flex h-(--header-height) shrink-0 items-center border-b bg-background/85 backdrop-blur-md supports-backdrop-filter:bg-background/70 md:rounded-t-xl">
-      <div className="flex w-full items-center gap-2 px-4 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mx-1 h-5 data-vertical:self-auto" />
-        <div className="flex min-w-0 items-center gap-2.5">
-          {item && (
-            <span className={`hidden size-7 items-center justify-center rounded-lg ${tone.soft} ${tone.text} sm:inline-flex`}>
-              <item.icon className="size-4" />
+    <header className="sticky top-0 z-20 flex h-18 shrink-0 items-center bg-[#f4f6fa]/90 px-6 backdrop-blur-md transition-colors">
+      <div className="flex w-full items-center gap-4">
+        {/* Mobile trigger */}
+        <SidebarTrigger className="md:hidden" />
+
+        {/* Search Bar - Clean Pill shape like reference image */}
+        <div className="flex-1 max-w-md">
+          <button
+            onClick={() => setOpen(true)}
+            className="flex w-full items-center gap-3 rounded-full border border-slate-200/80 bg-white px-4 py-2.5 text-xs text-slate-400 shadow-xs transition-all hover:border-slate-300 hover:shadow-sm"
+          >
+            <SearchIcon className="size-4 text-slate-400" />
+            <span className="flex-1 text-left">Search pipelines, runners, projects...</span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              ⌘K
             </span>
-          )}
-          <div className="flex min-w-0 flex-col leading-tight">
-            <h1 className="truncate text-base font-bold">{item?.title ?? "InfraDash (Gemini Edition)"}</h1>
-            <p className="hidden truncate text-xs text-muted-foreground md:block">
-              {item?.description ?? "GitLab 인프라 관측성 & AI 운영 콘솔"}
-            </p>
-          </div>
+          </button>
         </div>
 
-        <div className="ml-auto flex items-center gap-1.5">
-          {/* Quick AI Ops link */}
+        {/* Right Action Icons & User Profile */}
+        <div className="ml-auto flex items-center gap-3">
+          {/* Quick AI Trigger Pill */}
           <Link
             href="/ai-ops"
-            className="hidden sm:inline-flex items-center h-7 gap-1.5 rounded-lg border border-violet-500/30 bg-violet-500/10 px-2.5 text-[0.8rem] font-medium text-violet-400 transition-colors hover:bg-violet-500/20"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#5551ff]/10 px-3 py-1.5 text-xs font-semibold text-[#5551ff] transition-colors hover:bg-[#5551ff]/20"
           >
             <SparklesIcon className="size-3.5" />
-            <span>Ask Gemini</span>
+            <span>Gemini AI</span>
           </Link>
 
-          <Button
-            variant="outline"
-            size="sm"
+          {/* Mail icon circle */}
+          <button
             onClick={() => setOpen(true)}
-            className="hidden w-60 justify-start gap-2 text-muted-foreground lg:inline-flex"
+            className="flex size-10 items-center justify-center rounded-full border border-slate-200/70 bg-white text-slate-500 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-700"
+            aria-label="Messages"
           >
-            <SearchIcon className="size-4" />
-            <span className="flex-1 text-left">검색 또는 바로 이동</span>
-            <Kbd>⌘K</Kbd>
-          </Button>
-          <Button variant="ghost" size="icon-sm" aria-label="검색" className="lg:hidden" onClick={() => setOpen(true)}>
-            <SearchIcon className="size-4" />
-          </Button>
-          <Badge variant="outline" className="hidden gap-1.5 text-muted-foreground xl:inline-flex">
-            <CalendarIcon className="size-3.5" />
-            {fmtDateFull(MOCK_TODAY)} 기준
-          </Badge>
-          <Badge variant="secondary" className="hidden md:inline-flex">
-            모의 데이터
-          </Badge>
-          <Notifications />
+            <MailIcon className="size-4" />
+          </button>
+
+          {/* Notification bell circle */}
+          <button
+            onClick={() => setOpen(true)}
+            className="relative flex size-10 items-center justify-center rounded-full border border-slate-200/70 bg-white text-slate-500 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-700"
+            aria-label="Notifications"
+          >
+            <BellIcon className="size-4" />
+            <span className="absolute top-2.5 right-2.5 size-2 rounded-full bg-[#5551ff]" />
+          </button>
+
+          {/* User Profile Card like reference image */}
+          <div className="hidden sm:flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white p-1.5 pr-3 shadow-xs">
+            <Avatar className="size-8 rounded-xl bg-linear-to-tr from-[#5551ff] to-[#807dff] text-white">
+              <AvatarFallback className="bg-transparent text-xs font-bold text-white">
+                KJ
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col text-left leading-tight">
+              <span className="text-xs font-bold text-slate-800">Kim Jiwon</span>
+              <span className="text-[10px] text-slate-400">Infra Lead</span>
+            </div>
+            <ChevronDownIcon className="size-3.5 text-slate-400" />
+          </div>
+
           <ThemeToggle />
         </div>
       </div>
